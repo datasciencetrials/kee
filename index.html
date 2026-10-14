@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111111">
+    <title>KEE RSS Command Center</title>
+    <link rel="icon" href="data:,">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+
+    <link rel="stylesheet" href="app.css?v=20260819-mobile">
+</head>
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <div class="brand-block">
+                <div class="brand-mark"><i class="fa-solid fa-satellite-dish"></i></div>
+                <div>
+                    <h1>KEE Nexus</h1>
+                    <p class="nexus-version">V2.0 PREMIUM</p>
+                </div>
+            </div>
+
+            <nav class="nav-links">
+                <button class="nav-item active" type="button" data-view="map">
+                    <i class="fa-solid fa-map"></i>
+                    <span>Map</span>
+                </button>
+                <button class="nav-item" type="button" data-view="specs">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Specs</span>
+                </button>
+                <button class="nav-item" type="button" data-view="boq">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                    <span>BOQ</span>
+                </button>
+                <button class="nav-item" type="button" data-view="analytics">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Analytics</span>
+                </button>
+            </nav>
+
+            <div class="topbar-actions">
+                <div class="live-clock" id="liveClock" aria-label="Live local time">--:--:--</div>
+                <div class="status-block">
+                    <div class="system-status">
+                        <span class="status-dot"></span>
+                        <span class="status-text">System Online</span>
+                    </div>
+                    <p class="agency-text">Ministry of Works & Transport</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+
+            <section id="map-view" class="view-section active" aria-labelledby="mapTitle">
+                <div class="workspace-grid map-workspace">
+                    <section class="map-stage">
+                        <div class="map-control-overlay">
+                            <div class="map-header">
+                                <div>
+                                    <p class="nexus-eyebrow">GEOSPATIAL DEPLOYMENT CONSOLE</p>
+                                    <h3 id="mapTitle" class="nexus-map-title">RSS Components Along the Project Scope</h3>
+                                </div>
+                                <div class="map-header-actions">
+                                    <button class="ghost-btn" type="button" id="mapFitBtn" title="Zoom to full project extent">
+                                        <i class="fa-solid fa-expand"></i><span>Project extent</span>
+                                    </button>
+                                    <button class="ghost-btn" type="button" id="mapTourBtn" title="Auto-tour the assets">
+                                        <i class="fa-solid fa-play"></i><span>Tour</span>
+                                    </button>
+                                    <button class="ghost-btn" type="button" id="mapFullscreenBtn" title="View the map console fullscreen" aria-pressed="false">
+                                        <i class="fa-solid fa-up-right-and-down-left-from-center"></i><span>Fullscreen</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="control-deck">
+                                <label class="search-field">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <input type="search" id="mapSearchInput" placeholder="Search asset, site, purpose">
+                                </label>
+                                <select id="mapCorridorFilter" class="control-select" aria-label="Filter by corridor">
+                                    <option value="All">All corridors</option>
+                                </select>
+                                <select id="mapTypeFilter" class="control-select" aria-label="Filter by component">
+                                    <option value="All">All components</option>
+                                </select>
+                                <select id="mapPriorityFilter" class="control-select" aria-label="Filter by priority">
+                                    <option value="All">All priorities</option>
+                                </select>
+                                <button class="icon-button" type="button" id="mapResetBtn" title="Reset filters">
+                                    <i class="fa-solid fa-rotate-left"></i>
+                                </button>
+                            </div>
+
+                            <div class="component-rail" id="componentChips" aria-label="Component quick filters"></div>
+                        </div>
+
+                        <div class="map-canvas-wrap">
+                            <div class="map-map-shell">
+                                <div id="unifiedMap" class="unified-map" role="application" aria-label="KEE RSS geospatial map"></div>
+                                <div class="road-legend" id="mapRoadLegend">
+                                    <div class="rl-title">Uganda national road network</div>
+                                    <div class="rl-row"><span class="rl-line thick" style="background:#0a0a0a;border:1px solid rgba(255,255,255,0.55)"></span>Paved / bituminous</div>
+                                    <div class="rl-row"><span class="rl-line" style="background:#f59e0b"></span>Unpaved / gravel-earth</div>
+                                    <div class="rl-title">RSS project scope</div>
+                                    <div class="rl-row"><span class="rl-line thick" style="background:#34d399"></span>KEE Expressway (M3)</div>
+                                    <div class="rl-row"><span class="rl-line thick" style="background:#c084fc"></span>KNBP / Northern Bypass (M20)</div>
+                                    <div class="rl-row"><span class="rl-line thick" style="background:#fb7185"></span>Entebbe Airport Dual (A003N2)</div>
+                                </div>
+                                <div class="map-legend" id="mapLegend"></div>
+                            </div>
+                            <aside class="map-detail-overlay" id="mapDetailOverlay">
+                                <div class="overlay-head">
+                                    <div>
+                                        <p class="nexus-eyebrow">Asset focus</p>
+                                        <h4 id="selectedAssetTitle">No asset selected</h4>
+                                    </div>
+                                </div>
+                                <div id="mapDetailPanel" class="asset-detail empty-state">
+                                    <i class="fa-solid fa-location-crosshairs"></i>
+                                    <h4>No asset selected</h4>
+                                    <p>Click any installation point on the map, or use the filters and component chips above.</p>
+                                </div>
+                            </aside>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <section id="specs-view" class="view-section" aria-labelledby="specTitle">
+                <div class="view-header slim">
+                    <div>
+                        <p class="eyebrow">Technical specification</p>
+                        <h3 id="specTitle">RSS Component Specifications</h3>
+                        <p class="panel-note" id="specCountNote">Loading components...</p>
+                    </div>
+                    <label class="search-field view-search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="search" id="specsSearchInput" placeholder="Search components, makes, models, attributes...">
+                    </label>
+                </div>
+
+                <div class="dict-category-rail" id="specCategoryRail"></div>
+
+                <div class="panel table-panel spec-master-panel">
+                    <div class="table-wrap spec-master-wrap">
+                        <table class="dense-table spec-master-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Code</th>
+                                    <th>Component</th>
+                                    <th>Element type</th>
+                                    <th>Description &amp; attributes</th>
+                                    <th>Make / model</th>
+                                    <th>Qty</th>
+                                    <th>Unit</th>
+                                    <th>Context (subsystem &middot; location &middot; source)</th>
+                                    <th>Links</th>
+                                </tr>
+                            </thead>
+                            <tbody id="specsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="dict-more">
+                    <button class="ghost-btn" type="button" id="specLoadMore"><i class="fa-solid fa-plus"></i><span>Load more rows</span></button>
+                </div>
+            </section>
+
+            <section id="boq-view" class="view-section" aria-labelledby="boqTitle">
+                <div class="view-header">
+                    <div>
+                        <p class="eyebrow">Procurement</p>
+                        <h3 id="boqTitle">Bill of Quantities &amp; Component Register</h3>
+                    </div>
+                    <div class="spec-sub-tabs">
+                        <button class="boq-sub-tab active" data-target="boq-priced">RSS Bill of Quantities</button>
+                        <button class="boq-sub-tab" data-target="boq-register">Tendered Rates Register (reference)</button>
+                    </div>
+                </div>
+
+                <div id="boq-priced" class="boq-content-pane active">
+                    <div class="panel boq-panel">
+                        <div class="panel-heading compact">
+                            <h3 id="boqPricedTitle">RSS Bill of Quantities &mdash; single deployment (tendered-rate assumptions)</h3>
+                        </div>
+                        <div class="table-wrap boq-table-wrap">
+                            <table class="dense-table boq-table">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th class="num-col">Qty</th>
+                                        <th>Unit</th>
+                                        <th class="num-col">Rate (USD)</th>
+                                        <th class="num-col">Amount (USD)</th>
+                                        <th class="num-col highlight-col">Rate (UGX)</th>
+                                        <th class="num-col highlight-col">Amount (UGX)</th>
+                                        <th>Unit price assumption</th>
+                                        <th>Links</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="boqTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="boq-register" class="boq-content-pane">
+                    <div class="panel component-register-panel">
+                        <div class="panel-heading compact register-heading">
+                            <div>
+                                <h3>Tendered Rates Register &mdash; source pricing reference</h3>
+                                <p class="panel-note">Lane, booth, plaza, backoffice, RSS and spare items normalized from the project BOQ extracts.</p>
+                            </div>
+                            <label class="search-field compact-search">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="search" id="componentSearchInput" placeholder="Search barrier, RFID, UPS, camera, switch">
+                            </label>
+                        </div>
+                        <div class="component-summary-grid" id="componentSummaryGrid"></div>
+                        <div class="table-wrap component-table-wrap">
+                            <table class="dense-table component-table">
+                                <thead>
+                                    <tr>
+                                        <th>Source</th>
+                                        <th>Item</th>
+                                        <th>Description</th>
+                                        <th>Make / Model</th>
+                                        <th>Qty</th>
+                                        <th>Unit</th>
+                                        <th>Links</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="componentTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="analytics-view" class="view-section" aria-labelledby="analyticsTitle">
+                <div class="view-header slim">
+                    <div>
+                        <p class="eyebrow">Data intelligence</p>
+                        <h3 id="analyticsTitle">RSS Analytics - scope, safety, quantities and budget</h3>
+                        <p class="panel-note" id="analyticsNote">Focused only on KNBP, KEE and the Entebbe Airport Dual RSS scope: crash-record safety analysis, WIM sites, quantities and budget.</p>
+                    </div>
+                    <div class="export-bar" id="exportBar" aria-label="Export outputs">
+                        <span class="export-label">Export:</span>
+                        <button class="ghost-btn small" type="button" id="exportCsvBtn" title="RSS component register as CSV"><i class="fa-solid fa-file-csv"></i><span>CSV</span></button>
+                        <button class="ghost-btn small" type="button" id="exportXlsxBtn" title="RSS register + budget workbook (Excel)"><i class="fa-solid fa-file-excel"></i><span>Excel</span></button>
+                        <button class="ghost-btn small" type="button" id="exportKmlBtn" title="Components + scope corridors as KML (Google Earth)"><i class="fa-solid fa-earth-africa"></i><span>KML</span></button>
+                        <button class="ghost-btn small" type="button" id="exportPngBtn" title="RSS deployment schematic as PNG image"><i class="fa-solid fa-image"></i><span>PNG</span></button>
+                        <button class="ghost-btn small" type="button" id="exportPdfBtn" title="Full RSS proposal report as PDF"><i class="fa-solid fa-file-pdf"></i><span>PDF</span></button>
+                    </div>
+                </div>
+                <div class="analytics-cards" id="analyticsCards"></div>
+                <div class="analytics-summaries" id="analyticsSummaries"></div>
+                <div class="analytics-safety" id="analyticsSafety"></div>
+                <div class="analytics-budget" id="analyticsBudget"></div>
+                <div class="analytics-breakdowns" id="analyticsBreakdowns"></div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script src="data/actual_network.js?v=20260702-wim5-rssdict2"></script>
+    <script src="data/its-data.js?v=20260703-geocat"></script>
+    <script src="data/boq_data.js?v=20260702-wim5-rssdict2"></script>
+    <script src="data/toll_components.js?v=20260702-wim5-rssdict2"></script>
+    <script src="data/dictionary_data.js?v=20260703-outputs"></script>
+    <script src="data/project_scope.js?v=20260702-wim5-rssdict2"></script>
+    <script src="data/rss_data.js?v=20260702-wim5-rssdict2"></script>
+    <script src="data/rss_budget.js?v=20260703-geocat"></script>
+    <script src="data/traffic_data.js?v=20260703-restore"></script>
+    <script src="data/accident_data.js?v=20260702-3d-live"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" defer></script>
+    <script src="app.js?v=20260703-outputs"></script>
+</body>
+</html>

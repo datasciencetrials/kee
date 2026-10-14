@@ -1,0 +1,27 @@
+{
+  "date": "2026-09-27",
+  "repo": "kee",
+  "url": "https://datasciencetrials.github.io/kee/",
+  "technical": {
+    "httpStatus": 200,
+    "loadFailed": false,
+    "pageRendered": true,
+    "bodyTextLength": 1250,
+    "consoleErrors": [
+      "ReferenceError: num is not defined"
+    ],
+    "brokenImages": [
+      "https://mt1.google.com/vt/lyrs=y&x=602&y=510&z=10"
+    ],
+    "hashLinksFound": [],
+    "chartElementCount": 3
+  },
+  "accuracy": {
+    "extractedFigures": [],
+    "discrepancies": []
+  },
+  "consistency": {
+    "districtList": null,
+    "notes": []
+  }
+}
