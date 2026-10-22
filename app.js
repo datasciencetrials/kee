@@ -2504,6 +2504,7 @@
     }
 
     // ---- Animated 3D schematic of the RSS ------------------------------------------
+    const num = (v, d = 1) => Number(v).toLocaleString(undefined, { maximumFractionDigits: d });
     function renderRss3D() {
         const n = (t) => state.assets.filter((a) => a.type === t).length;
         const layers = [
