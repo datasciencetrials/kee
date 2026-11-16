@@ -2505,6 +2505,7 @@
 
     // ---- Animated 3D schematic of the RSS ------------------------------------------
     const num = (v, d = 1) => Number(v).toLocaleString(undefined, { maximumFractionDigits: d });
+    const CORR_LEN = Object.freeze({ KEE: 24.9, KNBP: 20.0, EDC: 12.7 });
     function renderRss3D() {
         const n = (t) => state.assets.filter((a) => a.type === t).length;
         const layers = [
@@ -2826,7 +2827,6 @@
         const assets = state.assets;
         if (!assets.length) return "";
         const bud = rssBudget || {};
-        const CORR_LEN = { KEE: 24.9, KNBP: 20.0, EDC: 12.7 };
         const corridors = ["KEE", "KNBP", "EDC"];
         const types = unique(assets.map((a) => a.type));
         const bins = accidentData.length ? crashBins() : null;
