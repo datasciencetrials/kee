@@ -3,7 +3,7 @@ window.RSS_BUDGET = {
     "scope": "KNBP, KEE and Entebbe Airport Dual - RSS technology to monitor traffic and share information",
     "deployment": "Single deployment (no phasing)",
     "fibreNote": "Corridor fibre backbone already laid - only field-site drops are priced.",
-    "sourceWorkbook": "BOQ entailing tendered rates for TTRS .xlsx",
+    "sourceWorkbook": "MoWT Tendered Rates Reference",
     "wimSites": [
         {
             "id": "WIM-KEE-001",
@@ -451,7 +451,7 @@ window.RSS_BUDGET = {
                     "assumption": "Software development norm benchmarked to RSS specification Annex A platform lines"
                 },
                 {
-                    "item": "Role-based dashboards, reporting and public information module",
+                    "item": "Public information and reporting dashboard module",
                     "qty": 1,
                     "unit": "Set",
                     "rate_ugx": 140000000,

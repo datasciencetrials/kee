@@ -24,14 +24,14 @@
         .map((script) => script.getAttribute("src") || "")
         .find((src) => src.includes("actual_network.js")) || "docs/data/actual_network.js";
 
-    const palette = ["#34d399", "#fbbf24", "#22d3ee", "#a78bfa", "#fb7185", "#60a5fa", "#fb923c"];
+    const palette = ["#16A34A", "#D97706", "#0D9488", "#7C3AED", "#DC2626", "#0071E3", "#D97706"];
     const statusPalette = {
-        "existing interface": "#34d399",
-        "operational": "#34d399",
-        "design": "#a78bfa",
-        "planned": "#fbbf24",
-        "survey required": "#fb7185",
-        "critical": "#fb7185"
+        "existing interface": "#16A34A",
+        "operational": "#16A34A",
+        "design": "#7C3AED",
+        "planned": "#D97706",
+        "survey required": "#DC2626",
+        "critical": "#DC2626"
     };
 
     const state = {
@@ -173,6 +173,8 @@
         setupSpecs();
         setupBOQ();
         setupAnalyticsDash();
+        setupDocs();
+        setupMindMap();
 
         switchView("map");
     }
@@ -295,9 +297,21 @@
 
         L.control.zoom({ position: "topright" }).addTo(state.map);
 
-        L.tileLayer("https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}", {
-            attribution: "&copy; Google",
-            maxZoom: 20
+        L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+            attribution: "Tiles &copy; Esri, Maxar, Earthstar Geographics, and the GIS User Community",
+            maxZoom: 19
+        }).addTo(state.map);
+
+        L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}", {
+            attribution: "",
+            maxZoom: 19,
+            pane: "overlayPane"
+        }).addTo(state.map);
+
+        L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}", {
+            attribution: "",
+            maxZoom: 19,
+            pane: "overlayPane"
         }).addTo(state.map);
 
         state.nationalLayer = L.layerGroup().addTo(state.map);
@@ -329,18 +343,18 @@
     // network2026 layer): expressway teal, Northern Bypass blue, Entebbe dual orange.
     function scopeColor(road) {
         const r = String(road || "");
-        if (r.startsWith("M20")) return "#c084fc";     // Kampala Northern Bypass - violet
-        if (r.startsWith("A003N2")) return "#fb7185";   // Entebbe dual carriageway - rose
-        if (r.startsWith("M3")) return "#34d399";       // Kampala-Entebbe Expressway - emerald
-        return "#34d399";
+        if (r.startsWith("M20")) return "#7C3AED";     // Kampala Northern Bypass - purple
+        if (r.startsWith("A003N2")) return "#DC2626";   // Entebbe dual carriageway - red
+        if (r.startsWith("M3")) return "#16A34A";       // Kampala-Entebbe Expressway - green
+        return "#16A34A";
     }
 
     // Colour the base national road network by surface type (network2026).
     function surfaceColor(surf) {
         const v = String(surf || "").toLowerCase();
-        if (v.startsWith("bitumin")) return "#0a0a0a";  // paved - bold black
-        if (v.startsWith("unseal")) return "#f59e0b";   // unpaved - orange/gold
-        return "#94a3b8";
+        if (v.startsWith("bitumin")) return "#0F172A";  // paved - bold slate
+        if (v.startsWith("unseal")) return "#D97706";   // unpaved - amber
+        return "#475569";
     }
     const SCOPE_MAINLINES = new Set(["M20", "M20N1", "M3_Link01", "M3N1_Link01", "A003N2_Link01"]);
 
@@ -443,7 +457,7 @@
                 if (latLngs.length < 2) return;
 
                 L.polyline(latLngs, {
-                    color: corridor.color || "#34d399",
+                    color: corridor.color || "#16A34A",
                     weight: 10,
                     opacity: 0.14,
                     lineCap: "round",
@@ -451,7 +465,7 @@
                 }).addTo(state.routeLayer);
 
                 L.polyline(latLngs, {
-                    color: corridor.color || "#34d399",
+                    color: corridor.color || "#16A34A",
                     weight: 4,
                     opacity: 0.92,
                     lineCap: "round",
@@ -463,10 +477,10 @@
 
     function routeColor(name = "") {
         const text = String(name).toLowerCase();
-        if (text.includes("entebbe")) return "#22d3ee";
-        if (text.includes("bypass")) return "#a78bfa";
-        if (text.includes("munyonyo")) return "#34d399";
-        return "#fbbf24";
+        if (text.includes("entebbe")) return "#0D9488";
+        if (text.includes("bypass")) return "#7C3AED";
+        if (text.includes("munyonyo")) return "#16A34A";
+        return "#D97706";
     }
 
     function populateMapControls() {
@@ -1517,9 +1531,9 @@
         payment: { file: "POS terminal at a bookstore.jpg", alt: "Point-of-sale payment terminal", caption: "Payment terminal / POS" },
         printer: { file: "Twitter receipt printer.jpg", alt: "Thermal receipt printer", caption: "Thermal receipt printing" },
         scanner: { file: "Barcode-scanner.jpg", alt: "Handheld barcode scanner", caption: "Scanner / document capture" },
-        power: { file: "UPS Power Management Module, racks with network cabling in NERSC data center.jpg", alt: "UPS power module and network cabling in racks", caption: "UPS and power distribution" },
+        power: { file: "UPS Power Management Module, racks with network cabling in NERSC data centre.jpg", alt: "UPS power module and network cabling in racks", caption: "UPS and power distribution" },
         network: { file: "19-inch rackmount Ethernet switches and patch panels.jpg", alt: "Rack-mounted Ethernet switches and patch panels", caption: "Network switch and patching" },
-        server: { file: "Datacenter Server Racks (22370909788).jpg", alt: "Data center server racks", caption: "Server / back-office infrastructure" },
+        server: { file: "Datacenter Server Racks (22370909788).jpg", alt: "Data centre server racks", caption: "Server / back-office infrastructure" },
         software: { file: "Network server and technician.jpg", alt: "Technician checking a network server", caption: "Software and operations platform" },
         comms: { file: "Network server and technician.jpg", alt: "Technician working near network equipment", caption: "Communications node" },
         console: { file: "Clover Station with receipt printer and cash drawer.jpg", alt: "Operator-style point-of-sale console with printer and cash drawer", caption: "Operator console" },
@@ -1578,14 +1592,14 @@
     const DIAGRAMS = {
         cctv:    { c: "#38bdf8", label: "PTZ / TMCS camera", body: "<rect x='150' y='60' width='8' height='110' fill='#64748b'/><ellipse cx='154' cy='172' rx='26' ry='6' fill='#475569'/><rect x='128' y='38' width='52' height='26' rx='6' fill='#38bdf8'/><circle cx='170' cy='51' r='7' fill='#0b0f19'/><path d='M180 51 L260 24 L260 78 Z' fill='#38bdf8' opacity='0.18'/><rect x='60' y='34' width='46' height='20' rx='4' fill='#14532d'/><text x='83' y='48' font-size='11' fill='#86efac' text-anchor='middle' font-family='monospace'>AI/ML</text><line x1='106' y1='44' x2='128' y2='48' stroke='#86efac' stroke-dasharray='3 3'/>" },
         "simple-cctv": { c: "#38bdf8", label: "CCTV camera", body: "<rect x='150' y='60' width='8' height='110' fill='#64748b'/><ellipse cx='154' cy='172' rx='26' ry='6' fill='#475569'/><rect x='128' y='38' width='52' height='26' rx='6' fill='#38bdf8'/><circle cx='170' cy='51' r='7' fill='#0b0f19'/>" },
-        anpr:    { c: "#1d4ed8", label: "ANPR camera", body: "<rect x='120' y='40' width='60' height='34' rx='6' fill='#3b82f6'/><circle cx='168' cy='57' r='8' fill='#0b0f19'/><rect x='128' y='46' width='14' height='10' rx='2' fill='#fbbf24'/><path d='M176 66 L230 116 L196 130 Z' fill='#3b82f6' opacity='0.2'/><rect x='96' y='120' width='128' height='34' rx='5' fill='#f8fafc'/><text x='160' y='143' font-size='18' fill='#0b0f19' text-anchor='middle' font-family='monospace' font-weight='bold'>UBJ 314K</text>" },
-        vms:     { c: "#f59e0b", label: "Overhead VMS gantry", body: "<rect x='52' y='60' width='10' height='106' fill='#64748b'/><rect x='258' y='60' width='10' height='106' fill='#64748b'/><rect x='52' y='52' width='216' height='12' fill='#475569'/><rect x='84' y='68' width='152' height='44' rx='4' fill='#0b0f19' stroke='#f59e0b'/><text x='160' y='89' font-size='12' fill='#fbbf24' text-anchor='middle' font-family='monospace'>FOG AHEAD</text><text x='160' y='104' font-size='12' fill='#fbbf24' text-anchor='middle' font-family='monospace'>SLOW - 60</text><rect x='40' y='166' width='240' height='8' fill='#334155'/>" },
-        vasd:    { c: "#a78bfa", label: "Speed display + radar", body: "<rect x='150' y='70' width='8' height='96' fill='#64748b'/><rect x='120' y='40' width='68' height='42' rx='6' fill='#0b0f19' stroke='#a78bfa'/><text x='154' y='70' font-size='24' fill='#a78bfa' text-anchor='middle' font-family='monospace' font-weight='bold'>57</text><path d='M196 56 L262 34 L262 82 Z' fill='#a78bfa' opacity='0.2'/>" },
+        anpr:    { c: "#1d4ed8", label: "ANPR camera", body: "<rect x='120' y='40' width='60' height='34' rx='6' fill='#3b82f6'/><circle cx='168' cy='57' r='8' fill='#0b0f19'/><rect x='128' y='46' width='14' height='10' rx='2' fill='#D97706'/><path d='M176 66 L230 116 L196 130 Z' fill='#3b82f6' opacity='0.2'/><rect x='96' y='120' width='128' height='34' rx='5' fill='#f8fafc'/><text x='160' y='143' font-size='18' fill='#0b0f19' text-anchor='middle' font-family='monospace' font-weight='bold'>UBJ 314K</text>" },
+        vms:     { c: "#f59e0b", label: "Overhead VMS gantry", body: "<rect x='52' y='60' width='10' height='106' fill='#64748b'/><rect x='258' y='60' width='10' height='106' fill='#64748b'/><rect x='52' y='52' width='216' height='12' fill='#475569'/><rect x='84' y='68' width='152' height='44' rx='4' fill='#0b0f19' stroke='#f59e0b'/><text x='160' y='89' font-size='12' fill='#D97706' text-anchor='middle' font-family='monospace'>FOG AHEAD</text><text x='160' y='104' font-size='12' fill='#D97706' text-anchor='middle' font-family='monospace'>SLOW - 60</text><rect x='40' y='166' width='240' height='8' fill='#334155'/>" },
+        vasd:    { c: "#7C3AED", label: "Speed display + radar", body: "<rect x='150' y='70' width='8' height='96' fill='#64748b'/><rect x='120' y='40' width='68' height='42' rx='6' fill='#0b0f19' stroke='#7C3AED'/><text x='154' y='70' font-size='24' fill='#7C3AED' text-anchor='middle' font-family='monospace' font-weight='bold'>57</text><path d='M196 56 L262 34 L262 82 Z' fill='#7C3AED' opacity='0.2'/>" },
         wim:     { c: "#be123c", label: "Weigh-in-Motion site", body: "<rect x='30' y='120' width='260' height='40' fill='#334155'/><rect x='110' y='120' width='16' height='40' fill='#f43f5e'/><rect x='190' y='120' width='16' height='40' fill='#f43f5e'/><rect x='60' y='70' width='96' height='40' rx='4' fill='#64748b'/><rect x='68' y='56' width='44' height='22' rx='3' fill='#94a3b8'/><circle cx='84' cy='114' r='10' fill='#1e293b'/><circle cx='128' cy='114' r='10' fill='#1e293b'/><text x='226' y='96' font-size='12' fill='#fda4af' font-family='monospace'>38.4 t &#9888;</text>" },
-        weather: { c: "#22d3ee", label: "AI weather intelligence (no hardware)", body: "<path d='M96 96 a26 26 0 1 1 6 -50 a32 32 0 0 1 62 8 a22 22 0 0 1 -6 42 Z' fill='#475569'/><line x1='92' y1='108' x2='84' y2='128' stroke='#38bdf8' stroke-width='3'/><line x1='116' y1='108' x2='108' y2='128' stroke='#38bdf8' stroke-width='3'/><line x1='140' y1='108' x2='132' y2='128' stroke='#38bdf8' stroke-width='3'/><rect x='188' y='52' width='72' height='52' rx='8' fill='#14532d'/><text x='224' y='74' font-size='12' fill='#86efac' text-anchor='middle' font-family='monospace'>AI MODEL</text><text x='224' y='92' font-size='9' fill='#86efac' text-anchor='middle' font-family='monospace'>ext. sources</text><line x1='150' y1='76' x2='188' y2='76' stroke='#86efac' stroke-dasharray='4 3'/><text x='160' y='158' font-size='11' fill='#94a3b8' text-anchor='middle'>fog / flood detection from PTZ video</text>" },
-        barrier: { c: "#fb7185", label: "Lane barrier", body: "<rect x='70' y='90' width='18' height='76' fill='#64748b'/><g transform='rotate(-28 88 96)'><rect x='88' y='88' width='170' height='14' rx='6' fill='#f8fafc'/><rect x='96' y='88' width='24' height='14' fill='#ef4444'/><rect x='144' y='88' width='24' height='14' fill='#ef4444'/><rect x='192' y='88' width='24' height='14' fill='#ef4444'/></g>" },
-        rfid:    { c: "#22d3ee", label: "RFID / DSRC", body: "<rect x='84' y='84' width='70' height='44' rx='6' fill='#0e7490'/><text x='119' y='111' font-size='12' fill='#a5f3fc' text-anchor='middle' font-family='monospace'>TAG</text><path d='M170 106 q20 -22 40 0' stroke='#22d3ee' fill='none' stroke-width='3'/><path d='M178 106 q12 -13 24 0' stroke='#22d3ee' fill='none' stroke-width='3'/><rect x='226' y='64' width='16' height='90' fill='#64748b'/><rect x='214' y='50' width='40' height='20' rx='4' fill='#22d3ee'/>" },
-        avc:     { c: "#a78bfa", label: "Vehicle classification", body: "<rect x='60' y='70' width='120' height='44' rx='6' fill='#64748b'/><rect x='180' y='84' width='60' height='30' rx='4' fill='#64748b'/><circle cx='92' cy='122' r='12' fill='#1e293b'/><circle cx='150' cy='122' r='12' fill='#1e293b'/><circle cx='210' cy='122' r='12' fill='#1e293b'/><rect x='50' y='140' width='220' height='10' fill='#334155'/><rect x='70' y='152' width='80' height='16' rx='4' fill='none' stroke='#a78bfa' stroke-dasharray='5 3'/><text x='160' y='180' font-size='11' fill='#94a3b8' text-anchor='middle'>axle count + class</text>" },
+        weather: { c: "#0D9488", label: "AI weather intelligence (no hardware)", body: "<path d='M96 96 a26 26 0 1 1 6 -50 a32 32 0 0 1 62 8 a22 22 0 0 1 -6 42 Z' fill='#475569'/><line x1='92' y1='108' x2='84' y2='128' stroke='#38bdf8' stroke-width='3'/><line x1='116' y1='108' x2='108' y2='128' stroke='#38bdf8' stroke-width='3'/><line x1='140' y1='108' x2='132' y2='128' stroke='#38bdf8' stroke-width='3'/><rect x='188' y='52' width='72' height='52' rx='8' fill='#14532d'/><text x='224' y='74' font-size='12' fill='#86efac' text-anchor='middle' font-family='monospace'>AI MODEL</text><text x='224' y='92' font-size='9' fill='#86efac' text-anchor='middle' font-family='monospace'>ext. sources</text><line x1='150' y1='76' x2='188' y2='76' stroke='#86efac' stroke-dasharray='4 3'/><text x='160' y='158' font-size='11' fill='#94a3b8' text-anchor='middle'>fog / flood detection from PTZ video</text>" },
+        barrier: { c: "#DC2626", label: "Lane barrier", body: "<rect x='70' y='90' width='18' height='76' fill='#64748b'/><g transform='rotate(-28 88 96)'><rect x='88' y='88' width='170' height='14' rx='6' fill='#f8fafc'/><rect x='96' y='88' width='24' height='14' fill='#ef4444'/><rect x='144' y='88' width='24' height='14' fill='#ef4444'/><rect x='192' y='88' width='24' height='14' fill='#ef4444'/></g>" },
+        rfid:    { c: "#0D9488", label: "RFID / DSRC", body: "<rect x='84' y='84' width='70' height='44' rx='6' fill='#0e7490'/><text x='119' y='111' font-size='12' fill='#a5f3fc' text-anchor='middle' font-family='monospace'>TAG</text><path d='M170 106 q20 -22 40 0' stroke='#0D9488' fill='none' stroke-width='3'/><path d='M178 106 q12 -13 24 0' stroke='#0D9488' fill='none' stroke-width='3'/><rect x='226' y='64' width='16' height='90' fill='#64748b'/><rect x='214' y='50' width='40' height='20' rx='4' fill='#0D9488'/>" },
+        avc:     { c: "#7C3AED", label: "Vehicle classification", body: "<rect x='60' y='70' width='120' height='44' rx='6' fill='#64748b'/><rect x='180' y='84' width='60' height='30' rx='4' fill='#64748b'/><circle cx='92' cy='122' r='12' fill='#1e293b'/><circle cx='150' cy='122' r='12' fill='#1e293b'/><circle cx='210' cy='122' r='12' fill='#1e293b'/><rect x='50' y='140' width='220' height='10' fill='#334155'/><rect x='70' y='152' width='80' height='16' rx='4' fill='none' stroke='#7C3AED' stroke-dasharray='5 3'/><text x='160' y='180' font-size='11' fill='#94a3b8' text-anchor='middle'>axle count + class</text>" },
         payment: { c: "#4ade80", label: "Payment equipment", body: "<rect x='90' y='70' width='140' height='90' rx='8' fill='#334155'/><rect x='102' y='84' width='116' height='24' rx='4' fill='#0b0f19'/><text x='160' y='101' font-size='12' fill='#4ade80' text-anchor='middle' font-family='monospace'>UGX 10,000</text><rect x='102' y='118' width='56' height='34' rx='4' fill='#475569'/><rect x='166' y='118' width='52' height='34' rx='4' fill='#4ade80' opacity='0.7'/>" },
         printer: { c: "#94a3b8", label: "Receipt printer", body: "<rect x='100' y='90' width='120' height='60' rx='8' fill='#475569'/><rect x='118' y='60' width='84' height='36' rx='4' fill='#f8fafc'/><line x1='128' y1='72' x2='192' y2='72' stroke='#94a3b8'/><line x1='128' y1='82' x2='176' y2='82' stroke='#94a3b8'/>" },
         scanner: { c: "#5eead4", label: "Scanner", body: "<rect x='96' y='120' width='128' height='30' rx='6' fill='#475569'/><g stroke='#f8fafc'><line x1='116' y1='70' x2='116' y2='108'/><line x1='126' y1='70' x2='126' y2='108' stroke-width='3'/><line x1='138' y1='70' x2='138' y2='108'/><line x1='150' y1='70' x2='150' y2='108' stroke-width='4'/><line x1='164' y1='70' x2='164' y2='108'/><line x1='176' y1='70' x2='176' y2='108' stroke-width='2'/><line x1='190' y1='70' x2='190' y2='108' stroke-width='3'/><line x1='202' y1='70' x2='202' y2='108'/></g><line x1='96' y1='90' x2='224' y2='90' stroke='#ef4444' stroke-width='2'/>" },
@@ -1593,8 +1607,8 @@
         network: { c: "#2dd4bf", label: "Fibre network", body: "<rect x='80' y='84' width='160' height='40' rx='6' fill='#334155'/><g fill='#2dd4bf'><rect x='92' y='96' width='12' height='16' rx='2'/><rect x='112' y='96' width='12' height='16' rx='2'/><rect x='132' y='96' width='12' height='16' rx='2'/><rect x='152' y='96' width='12' height='16' rx='2'/></g><path d='M60 150 q50 -18 100 0 t100 0' stroke='#2dd4bf' fill='none' stroke-width='3'/><path d='M60 160 q50 -18 100 0 t100 0' stroke='#f59e0b' fill='none' stroke-width='3'/>" },
         server:  { c: "#818cf8", label: "Servers / storage", body: "<rect x='110' y='44' width='100' height='128' rx='8' fill='#334155'/><g><rect x='120' y='56' width='80' height='22' rx='3' fill='#475569'/><rect x='120' y='86' width='80' height='22' rx='3' fill='#475569'/><rect x='120' y='116' width='80' height='22' rx='3' fill='#475569'/><rect x='120' y='146' width='80' height='16' rx='3' fill='#475569'/></g><g fill='#4ade80'><circle cx='190' cy='67' r='4'/><circle cx='190' cy='97' r='4'/><circle cx='190' cy='127' r='4'/></g>" },
         comms:   { c: "#4ade80", label: "Radio / voice comms", body: "<path d='M160 60 L140 166 L180 166 Z' fill='#64748b'/><line x1='146' y1='120' x2='174' y2='120' stroke='#94a3b8' stroke-width='3'/><line x1='150' y1='96' x2='170' y2='96' stroke='#94a3b8' stroke-width='3'/><circle cx='160' cy='52' r='7' fill='#4ade80'/><path d='M176 44 q18 10 0 22' stroke='#4ade80' fill='none' stroke-width='3'/><path d='M144 44 q-18 10 0 22' stroke='#4ade80' fill='none' stroke-width='3'/>" },
-        console: { c: "#c084fc", label: "Operator console", body: "<rect x='84' y='56' width='152' height='84' rx='6' fill='#0b0f19' stroke='#c084fc'/><rect x='94' y='66' width='64' height='30' fill='#1e293b'/><rect x='166' y='66' width='60' height='30' fill='#1e293b'/><rect x='94' y='102' width='132' height='28' fill='#1e293b'/><rect x='140' y='142' width='40' height='8' fill='#475569'/><rect x='104' y='154' width='112' height='12' rx='4' fill='#475569'/>" },
-        software:{ c: "#a78bfa", label: "Software / analytics", body: "<rect x='84' y='52' width='152' height='108' rx='8' fill='#1e293b' stroke='#a78bfa'/><circle cx='100' cy='66' r='4' fill='#f87171'/><circle cx='114' cy='66' r='4' fill='#fbbf24'/><circle cx='128' cy='66' r='4' fill='#4ade80'/><text x='104' y='102' font-size='20' fill='#a78bfa' font-family='monospace'>&#123;&#8226;&#125;</text><rect x='104' y='116' width='80' height='7' rx='3' fill='#475569'/><rect x='104' y='130' width='104' height='7' rx='3' fill='#475569'/>" },
+        console: { c: "#7C3AED", label: "Operator console", body: "<rect x='84' y='56' width='152' height='84' rx='6' fill='#0b0f19' stroke='#7C3AED'/><rect x='94' y='66' width='64' height='30' fill='#1e293b'/><rect x='166' y='66' width='60' height='30' fill='#1e293b'/><rect x='94' y='102' width='132' height='28' fill='#1e293b'/><rect x='140' y='142' width='40' height='8' fill='#475569'/><rect x='104' y='154' width='112' height='12' rx='4' fill='#475569'/>" },
+        software:{ c: "#7C3AED", label: "Software / analytics", body: "<rect x='84' y='52' width='152' height='108' rx='8' fill='#1e293b' stroke='#7C3AED'/><circle cx='100' cy='66' r='4' fill='#f87171'/><circle cx='114' cy='66' r='4' fill='#D97706'/><circle cx='128' cy='66' r='4' fill='#4ade80'/><text x='104' y='102' font-size='20' fill='#7C3AED' font-family='monospace'>&#123;&#8226;&#125;</text><rect x='104' y='116' width='80' height='7' rx='3' fill='#475569'/><rect x='104' y='130' width='104' height='7' rx='3' fill='#475569'/>" },
         civil:   { c: "#a3a3a3", label: "Structure / civils", body: "<rect x='70' y='56' width='12' height='100' fill='#64748b'/><rect x='238' y='56' width='12' height='100' fill='#64748b'/><rect x='70' y='48' width='180' height='12' fill='#475569'/><rect x='54' y='156' width='44' height='14' fill='#334155'/><rect x='222' y='156' width='44' height='14' fill='#334155'/><path d='M54 170 h44 M58 176 h36' stroke='#64748b'/>" },
         services:{ c: "#cbd5e1", label: "Installation & services", body: "<g transform='rotate(38 160 106)'><rect x='150' y='48' width='20' height='96' rx='6' fill='#94a3b8'/><path d='M146 48 a18 18 0 1 1 28 0 l-6 10 h-16 Z' fill='#64748b'/></g><g transform='rotate(-38 160 106)'><rect x='152' y='60' width='16' height='84' rx='5' fill='#64748b'/><rect x='148' y='44' width='24' height='20' rx='3' fill='#94a3b8'/></g>" },
         other:   { c: "#94a3b8", label: "RSS component", body: "<path d='M160 44 L214 76 L214 136 L160 168 L106 136 L106 76 Z' fill='#334155' stroke='#94a3b8'/><circle cx='160' cy='106' r='22' fill='#0b0f19' stroke='#94a3b8'/><circle cx='160' cy='106' r='7' fill='#94a3b8'/>" }
@@ -1603,7 +1617,7 @@
     DIAGRAMS.gantry = { c: "#a3a3a3", label: "Overhead gantry", body: "<rect x='58' y='58' width='12' height='104' fill='#64748b'/><rect x='250' y='58' width='12' height='104' fill='#64748b'/><rect x='58' y='46' width='204' height='14' fill='#475569'/><path d='M58 60 l14 14 M86 60 l14 14 M114 60 l14 14 M142 60 l14 14 M170 60 l14 14 M198 60 l14 14 M226 60 l14 14' stroke='#94a3b8'/><rect x='44' y='162' width='40' height='10' fill='#334155'/><rect x='236' y='162' width='40' height='10' fill='#334155'/>" };
     DIAGRAMS.cabinet = { c: "#14b8a6", label: "Roadside cabinet (RSU)", body: "<rect x='112' y='52' width='96' height='116' rx='8' fill='#334155' stroke='#14b8a6'/><line x1='160' y1='52' x2='160' y2='168' stroke='#14b8a6'/><circle cx='150' cy='112' r='4' fill='#14b8a6'/><circle cx='170' cy='112' r='4' fill='#14b8a6'/><path d='M126 40 l16 -14 h36 l16 14 Z' fill='#1e3a5f' stroke='#93c5fd'/><rect x='120' y='176' width='80' height='6' fill='#1e293b'/>" };
     DIAGRAMS.ecb = { c: "#ef4444", label: "Emergency call box", body: "<rect x='138' y='60' width='44' height='90' rx='8' fill='#ef4444'/><circle cx='160' cy='88' r='12' fill='#f8fafc'/><rect x='150' y='108' width='20' height='26' rx='4' fill='#7f1d1d'/><rect x='150' y='150' width='20' height='26' fill='#64748b'/><path d='M126 48 q-16 12 0 26' stroke='#fca5a5' fill='none' stroke-width='3'/><path d='M194 48 q16 12 0 26' stroke='#fca5a5' fill='none' stroke-width='3'/>" };
-    DIAGRAMS.videowall = { c: "#c084fc", label: "Video wall", body: "<g stroke='#c084fc' fill='#0b0f19'><rect x='76' y='50' width='54' height='36'/><rect x='133' y='50' width='54' height='36'/><rect x='190' y='50' width='54' height='36'/><rect x='76' y='89' width='54' height='36'/><rect x='133' y='89' width='54' height='36'/><rect x='190' y='89' width='54' height='36'/></g><rect x='140' y='134' width='40' height='8' fill='#475569'/><rect x='104' y='146' width='112' height='10' rx='4' fill='#475569'/><circle cx='103' cy='68' r='5' fill='#34d399'/><path d='M150 100 l10 8 18 -14' stroke='#f59e0b' fill='none' stroke-width='3'/>" };
+    DIAGRAMS.videowall = { c: "#7C3AED", label: "Video wall", body: "<g stroke='#7C3AED' fill='#0b0f19'><rect x='76' y='50' width='54' height='36'/><rect x='133' y='50' width='54' height='36'/><rect x='190' y='50' width='54' height='36'/><rect x='76' y='89' width='54' height='36'/><rect x='133' y='89' width='54' height='36'/><rect x='190' y='89' width='54' height='36'/></g><rect x='140' y='134' width='40' height='8' fill='#475569'/><rect x='104' y='146' width='112' height='10' rx='4' fill='#475569'/><circle cx='103' cy='68' r='5' fill='#16A34A'/><path d='M150 100 l10 8 18 -14' stroke='#f59e0b' fill='none' stroke-width='3'/>" };
     DIAGRAMS.weighbridge = { c: "#be123c", label: "Weighbridge platform", body: "<rect x='60' y='120' width='200' height='16' rx='4' fill='#94a3b8'/><rect x='78' y='136' width='16' height='22' fill='#475569'/><rect x='226' y='136' width='16' height='22' fill='#475569'/><rect x='96' y='70' width='110' height='44' rx='4' fill='#64748b'/><rect x='104' y='54' width='52' height='24' rx='3' fill='#94a3b8'/><circle cx='120' cy='118' r='11' fill='#1e293b'/><circle cx='176' cy='118' r='11' fill='#1e293b'/><rect x='228' y='64' width='52' height='30' rx='4' fill='#0b0f19' stroke='#f43f5e'/><text x='254' y='84' font-size='12' fill='#fda4af' text-anchor='middle' font-family='monospace'>52.3t</text>" };
     DIAGRAMS.avids = DIAGRAMS.cctv;
     DIAGRAMS.enforcement = DIAGRAMS.anpr;
@@ -2012,7 +2026,7 @@
                     datasets: [{
                         label: "Estimated value",
                         data: masterData.top_value_docs.slice(0, 10).map((doc) => Number(doc.estimated_value) || 0),
-                        backgroundColor: "#34d399",
+                        backgroundColor: "#16A34A",
                         borderRadius: 5
                     }]
                 },
@@ -2028,7 +2042,7 @@
                     datasets: [{
                         label: "Line items",
                         data: masterData.top_item_docs.slice(0, 10).map((doc) => Number(doc.items_count) || 0),
-                        backgroundColor: "#fbbf24",
+                        backgroundColor: "#D97706",
                         borderRadius: 5
                     }]
                 },
@@ -2083,7 +2097,7 @@
 
     function getStatusColor(status) {
         const key = String(status || "").toLowerCase();
-        return Object.entries(statusPalette).find(([name]) => key.includes(name))?.[1] || "#22d3ee";
+        return Object.entries(statusPalette).find(([name]) => key.includes(name))?.[1] || "#0D9488";
     }
 
     function countBy(items, key) {
@@ -2159,7 +2173,10 @@
         const match = String(raw).match(/\/Date\((\d+)\)\//);
         const date = match ? new Date(Number(match[1])) : new Date(raw);
         if (Number.isNaN(date.getTime())) return "No date";
-        return date.toLocaleDateString("en-UG", { year: "numeric", month: "short", day: "numeric" });
+        const dd = String(date.getDate()).padStart(2, "0");
+        const mm = String(date.getMonth() + 1).padStart(2, "0");
+        const yyyy = date.getFullYear();
+        return `${dd}/${mm}/${yyyy}`;
     }
 
     function formatNumber(value) {
@@ -2228,8 +2245,8 @@
         bud.categories.forEach((c) => {
             html += `<tr class="bt-cat"><td colspan="4">${escapeHtml(c.category)}</td>
                 <td class="num-col">${Number(c.subtotal_usd || c.subtotal_ugx / 3700).toLocaleString(undefined, {maximumFractionDigits: 0})}</td>
-                <td class="num-col">&mdash;</td>
-                <td class="num-col">${Number(c.subtotal_ugx).toLocaleString()}</td><td>&mdash;</td><td>&mdash;</td></tr>`;
+                <td class="num-col">-</td>
+                <td class="num-col">${Number(c.subtotal_ugx).toLocaleString()}</td><td>-</td><td>-</td></tr>`;
             c.items.forEach((it) => {
                 const term = mapTermForText(it.item);
                 html += `<tr>
@@ -2249,11 +2266,11 @@
                 </tr>`;
             });
         });
-        html += `<tr class="bt-cat"><td colspan="4">SUB-TOTAL (CAPEX)</td><td class="num-col">${Number(bud.subtotalUgx / (bud.currencyRate || 3700)).toLocaleString(undefined, {maximumFractionDigits: 0})}</td><td class="num-col">&mdash;</td><td class="num-col">${Number(bud.subtotalUgx).toLocaleString()}</td><td>&mdash;</td><td>&mdash;</td></tr>`;
-        html += `<tr class="bt-cat"><td colspan="4">Contingencies (10%)</td><td class="num-col">${Number(bud.contingencyUgx / (bud.currencyRate || 3700)).toLocaleString(undefined, {maximumFractionDigits: 0})}</td><td class="num-col">&mdash;</td><td class="num-col">${Number(bud.contingencyUgx).toLocaleString()}</td><td>&mdash;</td><td>&mdash;</td></tr>`;
-        html += `<tr class="bt-cat"><td colspan="4">VAT (18%)</td><td class="num-col">${Number(bud.vatUgx / (bud.currencyRate || 3700)).toLocaleString(undefined, {maximumFractionDigits: 0})}</td><td class="num-col">&mdash;</td><td class="num-col">${Number(bud.vatUgx).toLocaleString()}</td><td>&mdash;</td><td>&mdash;</td></tr>`;
-        html += `<tr class="bt-cat"><td colspan="4">TOTAL BEFORE VAT</td><td class="num-col">${Number((bud.beforeVatUgx || 0) / (bud.currencyRate || 3700)).toLocaleString(undefined, {maximumFractionDigits: 0})}</td><td class="num-col">&mdash;</td><td class="num-col">${Number(bud.beforeVatUgx || 0).toLocaleString()}</td><td>&mdash;</td><td>&mdash;</td></tr>`;
-        html += `<tr class="bt-cat bt-grand"><td colspan="4">GRAND TOTAL</td><td class="num-col">${Number(bud.grandTotalUgx / (bud.currencyRate || 3700)).toLocaleString(undefined, {maximumFractionDigits: 0})}</td><td class="num-col">&mdash;</td><td class="num-col">${Number(bud.grandTotalUgx).toLocaleString()}</td><td>&mdash;</td><td>&mdash;</td></tr>`;
+        html += `<tr class="bt-cat"><td colspan="4">SUB-TOTAL (CAPEX)</td><td class="num-col">${Number(bud.subtotalUgx / (bud.currencyRate || 3700)).toLocaleString(undefined, {maximumFractionDigits: 0})}</td><td class="num-col">-</td><td class="num-col">${Number(bud.subtotalUgx).toLocaleString()}</td><td>-</td><td>-</td></tr>`;
+        html += `<tr class="bt-cat"><td colspan="4">Contingencies (10%)</td><td class="num-col">${Number(bud.contingencyUgx / (bud.currencyRate || 3700)).toLocaleString(undefined, {maximumFractionDigits: 0})}</td><td class="num-col">-</td><td class="num-col">${Number(bud.contingencyUgx).toLocaleString()}</td><td>-</td><td>-</td></tr>`;
+        html += `<tr class="bt-cat"><td colspan="4">VAT (18%)</td><td class="num-col">${Number(bud.vatUgx / (bud.currencyRate || 3700)).toLocaleString(undefined, {maximumFractionDigits: 0})}</td><td class="num-col">-</td><td class="num-col">${Number(bud.vatUgx).toLocaleString()}</td><td>-</td><td>-</td></tr>`;
+        html += `<tr class="bt-cat"><td colspan="4">TOTAL BEFORE VAT</td><td class="num-col">${Number((bud.beforeVatUgx || 0) / (bud.currencyRate || 3700)).toLocaleString(undefined, {maximumFractionDigits: 0})}</td><td class="num-col">-</td><td class="num-col">${Number(bud.beforeVatUgx || 0).toLocaleString()}</td><td>-</td><td>-</td></tr>`;
+        html += `<tr class="bt-cat bt-grand"><td colspan="4">GRAND TOTAL</td><td class="num-col">${Number(bud.grandTotalUgx / (bud.currencyRate || 3700)).toLocaleString(undefined, {maximumFractionDigits: 0})}</td><td class="num-col">-</td><td class="num-col">${Number(bud.grandTotalUgx).toLocaleString()}</td><td>-</td><td>-</td></tr>`;
         tbody.innerHTML = html;
 
         $$("#boqTableBody .mini-link").forEach((button) => {
@@ -2374,7 +2391,7 @@
             <div class="budget-rows">
                 ${rows.map(([k, v], i) => `<div class="${i === rows.length - 1 ? "budget-grand" : ""}"><span>${escapeHtml(k)}</span><strong>${Number(v).toLocaleString()} UGX</strong></div>`).join("")}
                 <div><span>Approx. USD (@ ${bud.currencyRate}/USD)</span><strong>$${Number(bud.grandTotalUsd).toLocaleString()}</strong></div>
-                <div><span>Fibre backbone</span><strong>Already laid &mdash; only site drops priced</strong></div>
+                <div><span>Fibre backbone</span><strong>Already laid - only site drops priced</strong></div>
             </div>
         </section>`;
     }
@@ -2387,7 +2404,7 @@
             </div>
             <div class="rss-schematic" aria-label="RSS schematic architecture">
                 <div class="schem-band field-band">
-                    <div class="schem-title">Field layer &mdash; monitoring &amp; display</div>
+                    <div class="schem-title">Field layer - monitoring &amp; display</div>
                     <div class="schem-node"><i class="fa-solid fa-video"></i><strong>PTZ / TMCS with AI-ML</strong><span>26 cameras: all traffic + incident monitoring, auto-detection</span></div>
                     <div class="schem-node"><i class="fa-solid fa-weight-hanging"></i><strong>WIM x5 + ANPR</strong><span>Three existing KEE plaza SWIM sites plus two new KEE high-speed entry WIM screens, all integrated into RSS</span></div>
                     <div class="schem-node"><i class="fa-solid fa-signs-post"></i><strong>Overhead VMS x10</strong><span>Fixed gantry signs at corridor entries and decision points, clear of bridges and interchanges</span></div>
@@ -2400,12 +2417,12 @@
                 </div>
                 <div class="schem-link"><span>Continuous video, events, weigh records, weather status</span></div>
                 <div class="schem-band tcc-band">
-                    <div class="schem-title">TCC &mdash; Kajjansi Toll Plaza</div>
-                    <div class="schem-node"><i class="fa-solid fa-database"></i><strong>Central database</strong><span>Automated analytics on every feed &mdash; no manual trawling</span></div>
+                    <div class="schem-title">TCC - Kajjansi Toll Plaza</div>
+                    <div class="schem-node"><i class="fa-solid fa-database"></i><strong>Central database</strong><span>Automated analytics on every feed - no manual trawling</span></div>
                     <div class="schem-node"><i class="fa-solid fa-display"></i><strong>Video wall + operators</strong><span>Verification of AI-flagged incidents</span></div>
                     <div class="schem-node"><i class="fa-solid fa-bullhorn"></i><strong>Automated dissemination</strong><span>Notifications pushed to affected stakeholders; VMS updated</span></div>
                 </div>
-                <div class="schem-link"><span>Automatic notification &mdash; triggers action</span></div>
+                <div class="schem-link"><span>Automatic notification - triggers action</span></div>
                 <div class="schem-band stakeholder-band">
                     <div class="schem-title">Stakeholders notified</div>
                     <div class="schem-node"><i class="fa-solid fa-car-on"></i><strong>Patrol operations</strong><span>Dispatched to exact chainage with incident context</span></div>
@@ -2451,7 +2468,7 @@
             return head + items;
         }).join("");
         return `<section class="panel an-panel budget-table-panel">
-            <div class="an-panel-head"><h3>Costed RSS Bill of Quantities &mdash; single deployment</h3></div>
+            <div class="an-panel-head"><h3>Costed RSS Bill of Quantities - single deployment</h3></div>
             <div class="table-wrap budget-table-wrap">
                 <table class="dense-table budget-table">
                     <thead><tr><th>Item</th><th class="num">Qty</th><th>Unit</th><th class="num">Rate (UGX)</th><th class="num">Amount (UGX)</th></tr></thead>
@@ -2469,7 +2486,7 @@
             <div class="source-note-grid">
                 ${notes.map((note) => `<article class="source-note">
                     <strong>${escapeHtml(note.source)}</strong>
-                    <span>${escapeHtml([note.sheet, note.rows, note.section].filter(Boolean).join(" | "))}</span>
+                    <span>${escapeHtml([note.sheet, note.section].filter(Boolean).join(" | "))}</span>
                     <p>${escapeHtml(note.note)}</p>
                 </article>`).join("")}
             </div>
@@ -2509,31 +2526,31 @@
     function renderRss3D() {
         const n = (t) => state.assets.filter((a) => a.type === t).length;
         const layers = [
-            { cls: "l-stake", title: "STAKEHOLDERS", color: "#fb7185", nodes: [
+            { cls: "l-stake", title: "STAKEHOLDERS", color: "#DC2626", nodes: [
                 ["fa-car-on", "Patrol crews"], ["fa-scale-balanced", "Enforcement / UNBS"],
                 ["fa-truck-medical", "Ambulance & recovery"], ["fa-mobile-screen", "Road users (VMS)"]] },
-            { cls: "l-tcc", title: "TCC - KAJJANSI TOLL PLAZA", color: "#22d3ee", nodes: [
+            { cls: "l-tcc", title: "TCC - KAJJANSI TOLL PLAZA", color: "#0D9488", nodes: [
                 ["fa-database", "Central database"], ["fa-brain", "AI/ML analytics"],
                 ["fa-cloud-sun-rain", "AI weather model"], ["fa-bullhorn", "Auto notification engine"]] },
-            { cls: "l-net", title: "DATA BACKBONE (EXISTING FIBRE)", color: "#34d399", nodes: [
+            { cls: "l-net", title: "DATA BACKBONE (EXISTING FIBRE)", color: "#16A34A", nodes: [
                 ["fa-network-wired", n("Comms") + " site drops"], ["fa-box", n("RSU") + " RSUs (solar-hybrid)"]] },
-            { cls: "l-field", title: `FIELD LAYER - ${num(CORR_LEN.KEE + CORR_LEN.KNBP + CORR_LEN.EDC, 1)} KM SCOPE`, color: "#fbbf24", nodes: [
+            { cls: "l-field", title: `FIELD LAYER - ${num(CORR_LEN.KEE + CORR_LEN.KNBP + CORR_LEN.EDC, 1)} KM SCOPE`, color: "#D97706", nodes: [
                 ["fa-video", n("CCTV") + " PTZ AI-ML cameras"], ["fa-signs-post", n("VMS") + " overhead VMS"],
                 ["fa-weight-hanging", n("WIM") + " WIM sites (2 HS + 3 SWIM)"], ["fa-camera", n("ANPR") + " WIM ANPR"]] },
         ];
         const flowsBetween = [
-            [["down", "#fb7185", "Automatic notifications: incident, overload, weather"],
-             ["down", "#fb7185", "Dispatch context: chainage, lane, severity, live picture"],
-             ["up", "#22d3ee", "Acknowledgements + clearance reports back to the database"]],
-            [["up", "#34d399", "Aggregated events + video into the database"],
-             ["down", "#22d3ee", "VMS messages + camera control commands"],
-             ["up", "#34d399", "Health telemetry: RSU power, link status, device faults"]],
-            [["up", "#fbbf24", "Continuous video streams (" + n("CCTV") + " PTZ)"],
-             ["up", "#fbbf24", "Weigh events + ANPR plates (" + n("WIM") + " WIM sites)"],
-             ["down", "#22d3ee", "Display content to " + n("VMS") + " VMS"]],
+            [["down", "#DC2626", "Automatic notifications: incident, overload, weather"],
+             ["down", "#DC2626", "Dispatch context: chainage, lane, severity, live picture"],
+             ["up", "#0D9488", "Acknowledgements + clearance reports back to the database"]],
+            [["up", "#16A34A", "Aggregated events + video into the database"],
+             ["down", "#0D9488", "VMS messages + camera control commands"],
+             ["up", "#16A34A", "Health telemetry: RSU power, link status, device faults"]],
+            [["up", "#D97706", "Continuous video streams (" + n("CCTV") + " PTZ)"],
+             ["up", "#D97706", "Weigh events + ANPR plates (" + n("WIM") + " WIM sites)"],
+             ["down", "#0D9488", "Display content to " + n("VMS") + " VMS"]],
         ];
         let html = `<section class="panel an-panel schem3d-panel">
-            <div class="an-panel-head"><h3>RSS architecture &mdash; connections, process flows and decision logic</h3>
+            <div class="an-panel-head"><h3>RSS architecture - connections, process flows and decision logic</h3>
                 <span class="pill">${state.assets.length} components live-linked</span></div>
             <div class="schem3d-stage"><div class="schem3d">`;
         layers.forEach((L, i) => {
@@ -2575,7 +2592,7 @@
                 }).join("")}
             </div>`;
         return `<div class="dtree-grid">
-            ${tree("AI incident pipeline (every PTZ frame)", "#fbbf24", [
+            ${tree("AI incident pipeline (every PTZ frame)", "#D97706", [
                 { t: "Video frame ingested from PTZ stream", icon: "fa-video" },
                 { t: "AI/ML model: detect + classify (stopped vehicle, collision, pedestrian, debris, fog, flood)", icon: "fa-brain" },
                 { q: "Detection confidence &ge; 90%?",
@@ -2596,7 +2613,7 @@
                   no: "Warning notice auto-issued to operator via registry lookup" },
                 { t: "Certified weigh &rarr; prosecution pack or release; outcome fed back to the database", icon: "fa-scale-balanced" },
             ])}
-            ${tree("Weather intelligence (no field hardware)", "#22d3ee", [
+            ${tree("Weather intelligence (no field hardware)", "#0D9488", [
                 { t: "AI weather model ingests existing reliable sources, localised to corridor segments", icon: "fa-cloud-sun-rain" },
                 { t: "PTZ video analytics cross-check: fog density, standing water, visibility", icon: "fa-video" },
                 { q: "Model + video agree on hazard?",
@@ -2656,7 +2673,7 @@
         const assets = state.assets;
         let html = "";
         const types = unique(assets.map((a) => a.type));
-        const corrSeries = [{ label: "KEE", color: "#34d399" }, { label: "KNBP", color: "#c084fc" }, { label: "EDC", color: "#fb7185" }];
+        const corrSeries = [{ label: "KEE", color: "#16A34A" }, { label: "KNBP", color: "#7C3AED" }, { label: "EDC", color: "#DC2626" }];
         html += clusteredChart("RSS components by type and corridor", types.map((t) => ({
             label: t,
             values: ["KEE", "KNBP", "EDC"].map((c) => assets.filter((a) => a.type === t && a.corridor === c).length)
@@ -2668,7 +2685,7 @@
                 label: r.name.replace("KNBP ", "").replace("Entebbe Airport Dual", "Airport Dual"),
                 values: [r.adt || 0, r.freightAdt || 0, r.heavy || 0],
             })), [
-                { label: "Motorised ADT", color: "#22d3ee" },
+                { label: "Motorised ADT", color: "#0D9488" },
                 { label: "Freight ADT", color: "#f97316" },
                 { label: "Heavy + bus ADT", color: "#ef4444" },
             ], "vehicles/day", {
@@ -2684,9 +2701,9 @@
                 values: [s.adtExclMotorcycles || s.adt || 0, s.motorcycles || 0, s.freightAdt || 0, s.trailers || 0],
             })), [
                 { label: "Motorised ADT excl. motorcycles", color: "#38bdf8" },
-                { label: "Motorcycles", color: "#a78bfa" },
+                { label: "Motorcycles", color: "#7C3AED" },
                 { label: "Freight ADT", color: "#f59e0b" },
-                { label: "Truck trailers", color: "#fb7185" },
+                { label: "Truck trailers", color: "#DC2626" },
             ], "classified count evidence", {
                 yAxis: "Vehicles per day",
                 note: "High motorcycle-inclusive flows are shown separately so VMS/PTZ placement is not confused with freight-screening demand.",
@@ -2710,7 +2727,7 @@
         if (accidentData.length) {
             const sevSeries = [
                 { label: "Fatal", color: "#ef4444" }, { label: "Severe", color: "#f97316" },
-                { label: "Minor", color: "#fbbf24" }, { label: "Damage only", color: "#38bdf8" }];
+                { label: "Minor", color: "#D97706" }, { label: "Damage only", color: "#38bdf8" }];
             const years = unique(accidentData.map((r) => r.year));
             html += clusteredChart("KEE crashes by year and severity (2021-26)", years.map((y) => ({
                 label: String(y),
@@ -2723,7 +2740,7 @@
             })), sevSeries, accidentData.length + " crashes", { yAxis: "Crash count" });
             const bands = unique(accidentData.map((r) => r.hour_band)).sort();
             const dirs = unique(accidentData.map((r) => r.direction));
-            const dirColors = ["#22d3ee", "#a78bfa", "#4ade80", "#f59e0b", "#fb7185"];
+            const dirColors = ["#0D9488", "#7C3AED", "#4ade80", "#f59e0b", "#DC2626"];
             html += clusteredChart("KEE crashes by time of day and direction", bands.map((b) => ({
                 label: b,
                 values: dirs.map((d2) => accidentData.filter((r) => r.hour_band === b && r.direction === d2).length)
@@ -2753,7 +2770,7 @@
             })), [
                 { label: "Total ADT", color: "#06b6d4" },
                 { label: "Heavy classes", color: "#ef4444" },
-                { label: "Freight classes", color: "#fb923c" },
+                { label: "Freight classes", color: "#D97706" },
             ], "latest 12 source rows", {
                 yAxis: "Vehicles per day",
                 note: "Class totals are reconciled to the reported monthly ADT where the source table contains an obvious class-entry typo.",
@@ -2772,7 +2789,7 @@
             html += clusteredChart("RSS budget by package category (UGX millions, before VAT)", rssBudget.categories.map((c) => ({
                 label: c.category.split(" ")[0].replace(":", "").slice(0, 12),
                 values: [Math.round(c.subtotal_ugx / 1e6)]
-            })), [{ label: "Category sub-total (M UGX)", color: "#a78bfa" }], ugxB(rssBudget.subtotalUgx) + " UGX CAPEX", {
+            })), [{ label: "Category sub-total (M UGX)", color: "#7C3AED" }], ugxB(rssBudget.subtotalUgx) + " UGX CAPEX", {
                 yAxis: "M UGX", note: "Full category names and line items are in the BOQ tab; every rate carries its unit-price assumption."
             });
         }
@@ -2808,7 +2825,7 @@
             <td class="col-just">${escapeHtml(just(a))}</td>
         </tr>`).join("");
         return `<section class="panel an-panel geocat-panel">
-            <div class="an-panel-head"><h3>Georeferenced RSS component catalogue &mdash; proposed locations and justification</h3>
+            <div class="an-panel-head"><h3>Georeferenced RSS component catalogue - proposed locations and justification</h3>
                 <span class="pill">${assets.length} components &middot; WGS84</span></div>
             <div class="table-wrap geocat-wrap">
                 <table class="dense-table geocat-table">
@@ -3040,7 +3057,7 @@
 
         const total = sections.reduce((s2, x) => s2 + x.stats.length, 0);
         return `<section class="panel an-panel summaries-panel">
-            <div class="an-panel-head"><h3>RSS component summaries &mdash; in-depth</h3><span class="pill">${total} statistics</span></div>
+            <div class="an-panel-head"><h3>RSS component summaries - in-depth</h3><span class="pill">${total} statistics</span></div>
             <div class="sum-groups">
                 ${sections.map((g) => `<div class="sum-group"><h4>${escapeHtml(g.title)}</h4>
                     ${g.stats.map(([k, v]) => `<div class="sum-row"><span>${escapeHtml(String(k))}</span><strong>${escapeHtml(String(v))}</strong></div>`).join("")}
@@ -3094,7 +3111,7 @@
             ["km 23-24 hotspot + Mpala entry", "PTZ km 23.5, existing Mpala static WIM + ANPR km 24.65, new HS-WIM + ANPR km 24.0, overhead VMS full-carriageway warning km 19"],
         ];
         return `<section class="panel an-panel safety-panel">
-            <div class="an-panel-head"><h3>Safety analysis &mdash; KEE crash record 2021-26 drives the RSS placement</h3>
+            <div class="an-panel-head"><h3>Safety analysis - KEE crash record 2021-26 drives the RSS placement</h3>
                 <span class="pill">${n} crashes &middot; ${fat} fatalities</span></div>
             <div class="safety-stats">
                 <div><span>Crashes analysed</span><strong>${n}</strong></div>
@@ -3121,7 +3138,7 @@
             ["fa-signs-post", "Inform road users", "In parallel the database updates fixed overhead VMS boards upstream of the event, warning the whole carriageway and protecting both the scene and the responding patrol."],
         ];
         return `<section class="panel an-panel patrol-panel">
-            <div class="an-panel-head"><h3>Patrol operations &mdash; how the RSS triggers action</h3>
+            <div class="an-panel-head"><h3>Patrol operations - how the RSS triggers action</h3>
                 <span class="pill">Notification-driven</span></div>
             <p class="panel-note">The RSS does not replace patrols; it makes them efficient. Detection is automatic, so patrols respond to verified, located events instead of discovering them.</p>
             <div class="patrol-steps">
@@ -3204,40 +3221,42 @@
         const W = 1600, H = 900, cv = document.createElement("canvas");
         cv.width = W; cv.height = H;
         const g = cv.getContext("2d");
-        g.fillStyle = "#0b0f19"; g.fillRect(0, 0, W, H);
-        g.fillStyle = "#f2f1ec"; g.font = "700 30px Arial";
-        g.fillText("RSS Deployment Schematic - KNBP, KEE & Entebbe Airport Dual", 40, 52);
-        g.font = "16px Arial"; g.fillStyle = "#a9aaa2";
-        g.fillText("Risk-weighted from the 2021-26 KEE crash record (503 crashes, 16 fatalities). Package total " + ugxB((rssBudget || {}).grandTotalUgx || 0) + " UGX.", 40, 80);
-        const corr = [["KEE", "Kampala-Entebbe Expressway (24.9 km)", "#34d399", 200],
-                      ["KNBP", "Kampala Northern Bypass (20.0 km)", "#c084fc", 460],
-                      ["EDC", "Entebbe Airport Dual (12.7 km)", "#fb7185", 720]];
-        const X0 = 90, X1 = W - 90;
-        const typeColor = { CCTV: "#3b82f6", AVIDS: "#f97316", ANPR: "#1d4ed8", VMS: "#f59e0b", ECB: "#ef4444", WIM: "#be123c", RSU: "#14b8a6", RWIS: "#0891b2", Comms: "#ec4899", TOC: "#111827", VASD: "#605afa" };
+        g.fillStyle = "#F5F5F7"; g.fillRect(0, 0, W, H);
+        g.fillStyle = "#FFFFFF"; g.fillRect(24, 20, W - 48, H - 40);
+        g.strokeStyle = "#E2E8F0"; g.lineWidth = 2; g.strokeRect(24, 20, W - 48, H - 40);
+        g.fillStyle = "#0F172A"; g.font = "700 30px Arial";
+        g.fillText("RSS Deployment Schematic - KNBP, KEE & Entebbe Airport Dual", 48, 66);
+        g.font = "16px Arial"; g.fillStyle = "#475569";
+        g.fillText("Risk-weighted from the 2021-26 KEE crash record (503 crashes, 16 fatalities). Package total " + ugxB((rssBudget || {}).grandTotalUgx || 0) + " UGX.", 48, 94);
+        const corr = [["KEE", "Kampala-Entebbe Expressway (24.9 km)", "#16A34A", 210],
+                      ["KNBP", "Kampala Northern Bypass (20.0 km)", "#7C3AED", 460],
+                      ["EDC", "Entebbe Airport Dual (12.7 km)", "#DC2626", 710]];
+        const X0 = 96, X1 = W - 96;
+        const typeColor = { CCTV: "#0071E3", AVIDS: "#D97706", ANPR: "#7C3AED", VMS: "#D97706", ECB: "#DC2626", WIM: "#DC2626", RSU: "#0D9488", RWIS: "#0D9488", Comms: "#7C3AED", TOC: "#0F172A", VASD: "#0071E3" };
         corr.forEach(([cid, label, color, y]) => {
             const maxKm = Math.max(...state.assets.filter((a) => a.corridor === cid).map((a) => a.km), 1);
             g.strokeStyle = color; g.lineWidth = 6; g.beginPath(); g.moveTo(X0, y); g.lineTo(X1, y); g.stroke();
-            g.fillStyle = "#f2f1ec"; g.font = "700 18px Arial"; g.fillText(label, X0, y - 58);
+            g.fillStyle = "#0F172A"; g.font = "700 18px Arial"; g.fillText(label, X0, y - 58);
             state.assets.filter((a) => a.corridor === cid).forEach((a) => {
                 const x = X0 + (a.km / maxKm) * (X1 - X0);
-                g.fillStyle = typeColor[a.type] || "#94a3b8";
+                g.fillStyle = typeColor[a.type] || "#475569";
                 g.beginPath(); g.arc(x, y, a.type === "WIM" || a.type === "TOC" ? 11 : 7, 0, Math.PI * 2); g.fill();
                 if (a.type === "WIM" || a.type === "TOC" || a.type === "AVIDS") {
                     g.save(); g.translate(x, y - 20); g.rotate(-Math.PI / 5);
-                    g.fillStyle = "#f2f1ec"; g.font = "12px Arial"; g.fillText(a.site.slice(0, 34), 0, 0); g.restore();
+                    g.fillStyle = "#0F172A"; g.font = "12px Arial"; g.fillText(a.site.slice(0, 34), 0, 0); g.restore();
                 }
             });
-            g.fillStyle = "#a9aaa2"; g.font = "12px Arial";
+            g.fillStyle = "#475569"; g.font = "12px Arial";
             for (let k = 0; k <= maxKm; k += 5) {
                 const x = X0 + (k / maxKm) * (X1 - X0);
                 g.fillText("km " + k, x - 12, y + 26);
             }
         });
-        let lx = X0, ly = H - 60;
+        let lx = X0, ly = H - 56;
         g.font = "14px Arial";
         Object.entries(typeColor).forEach(([t, c]) => {
             g.fillStyle = c; g.beginPath(); g.arc(lx, ly, 7, 0, Math.PI * 2); g.fill();
-            g.fillStyle = "#d4d2c7"; g.fillText(t, lx + 12, ly + 5);
+            g.fillStyle = "#0F172A"; g.fillText(t, lx + 12, ly + 5);
             lx += 18 + g.measureText(t).width + 26;
         });
         cv.toBlob((b) => downloadBlob("RSS_deployment_schematic.png", b), "image/png");
@@ -3251,10 +3270,11 @@
         let y = M;
 
         const header = (title, sub) => {
-            doc.setFillColor(11, 15, 25); doc.rect(0, 0, PW, 24, "F");
-            doc.setTextColor(255, 255, 255); doc.setFont("helvetica", "bold"); doc.setFontSize(13);
+            doc.setFillColor(245, 245, 247); doc.rect(0, 0, PW, 24, "F");
+            doc.setFillColor(0, 113, 227); doc.rect(0, 23, PW, 1, "F");
+            doc.setTextColor(15, 23, 42); doc.setFont("helvetica", "bold"); doc.setFontSize(13);
             doc.text(title, M, 10);
-            doc.setFont("helvetica", "normal"); doc.setFontSize(8.5); doc.setTextColor(200, 205, 215);
+            doc.setFont("helvetica", "normal"); doc.setFontSize(8.5); doc.setTextColor(71, 85, 105);
             doc.text(sub, M, 17);
             y = 30;
         };
@@ -3352,6 +3372,211 @@
         $("#exportKmlBtn")?.addEventListener("click", exportKML);
         $("#exportPngBtn")?.addEventListener("click", exportPNG);
         $("#exportPdfBtn")?.addEventListener("click", exportPDF);
+    }
+
+
+    // ---- Platform Documentation (View-Only) ----------------------------------------
+    function setupDocs() {
+        const container = $("#docsContent");
+        if (!container) return;
+
+        container.innerHTML = `
+            <div class="doc-kpi-row">
+                <div class="doc-kpi"><strong>21,284.02 km</strong><span>National Road Network (FY 2026/27)</span></div>
+                <div class="doc-kpi"><strong>6,406.69 km</strong><span>Paved network (30.10%)</span></div>
+                <div class="doc-kpi"><strong>14,877.33 km</strong><span>Unpaved network (69.90%)</span></div>
+                <div class="doc-kpi"><strong>552 Bridges</strong><span>Includes B162 (Atari Bridge)</span></div>
+                <div class="doc-kpi"><strong>452 Culverts</strong><span>Major culverts (01/10/2026)</span></div>
+                <div class="doc-kpi"><strong>2016 to 2040</strong><span>Vision 2040 projection horizon</span></div>
+            </div>
+
+            <div class="docs-grid">
+                <article class="doc-card">
+                    <div class="doc-card-head">
+                        <div class="doc-icon"><i class="fa-solid fa-road"></i></div>
+                        <h4>National Road Network &amp; Structures Baseline</h4>
+                    </div>
+                    <p>This platform operates within the Ministry of Works and Transport (MoWT), Department of National Roads authoritative baseline of <strong>21,284.02 km</strong> (dated 23/09/2026), comprising <strong>6,406.69 km</strong> paved and <strong>14,877.33 km</strong> unpaved roads.</p>
+                    <ul>
+                        <li>International Trunk Roads: <strong>2,604.65 km</strong></li>
+                        <li>National Trunk Roads: <strong>2,845.27 km</strong></li>
+                        <li>Primary Roads: <strong>15,689.54 km</strong></li>
+                        <li>Expressways: <strong>144.56 km</strong></li>
+                        <li>Major Structures (01/10/2026): <strong>552 bridges</strong> (including <strong>B162</strong>, <strong>Atari Bridge</strong>) and <strong>452 major culverts</strong></li>
+                    </ul>
+                </article>
+
+                <article class="doc-card">
+                    <div class="doc-card-head">
+                        <div class="doc-icon"><i class="fa-solid fa-satellite-dish"></i></div>
+                        <h4>KEE RSS Corridor Scope</h4>
+                    </div>
+                    <p>The Road Surveillance System (RSS) covers three high-priority metropolitan corridors with real-time surveillance, Weigh-in-Motion (WIM), Automated Number Plate Recognition (ANPR), and Variable Message Signs (VMS):</p>
+                    <ul>
+                        <li><strong>KEE Expressway (M3):</strong> 24.9 km high-speed tolled expressway corridor</li>
+                        <li><strong>Kampala Northern Bypass (M20):</strong> 20.0 km urban arterial bypass corridor</li>
+                        <li><strong>Entebbe Airport Dual (A003N2):</strong> 12.7 km dual carriageway access corridor</li>
+                        <li><strong>Traffic Control Centre (TCC):</strong> Kajjansi Toll Plaza central database and automated dissemination engine</li>
+                    </ul>
+                </article>
+
+                <article class="doc-card">
+                    <div class="doc-card-head">
+                        <div class="doc-icon"><i class="fa-solid fa-gauge-high"></i></div>
+                        <h4>Survey &amp; Condition Assessment Standards</h4>
+                    </div>
+                    <p>Network condition, roughness, and structural performance indicators follow standardised Ministry survey protocols:</p>
+                    <ul>
+                        <li><strong>MOBICAP(Road condition assesment tool):</strong> Mobile road condition capture for paved and unpaved surface distress evaluation</li>
+                        <li><strong>ROMDAS(Roughness and rutting machine based testing):</strong> Machine-based International Roughness Index (IRI) and rutting measurement</li>
+                        <li><strong>Traffic &amp; Safety Evidence:</strong> Classified 12-hour traffic counts, tolling telemetry, and georeferenced crash-bin analytics</li>
+                    </ul>
+                </article>
+
+                <article class="doc-card">
+                    <div class="doc-card-head">
+                        <div class="doc-icon"><i class="fa-solid fa-earth-africa"></i></div>
+                        <h4>Geospatial, Units &amp; Vision 2040 Standards</h4>
+                    </div>
+                    <p>All views are strictly view-only public information interfaces projecting historic baselines (2016) and current operations (2026) through to <strong>Vision 2040</strong>.</p>
+                    <ul>
+                        <li><strong>Basemap:</strong> Esri World Imagery with Hybrid Boundaries, Places, and Transportation overlays</li>
+                        <li><strong>Units &amp; Coordinates:</strong> Metric units (km, m, mm, T, km/h) and WGS84 decimal degrees</li>
+                        <li><strong>Formatting:</strong> dd/mm/yyyy dates and UK English terminology throughout</li>
+                        <li><strong>Open Access:</strong> Public view-only portal; all outputs downloadable as CSV, Excel, KML, PNG, and PDF</li>
+                    </ul>
+                </article>
+            </div>
+        `;
+    }
+
+    // ---- Interactive Mind Map (View-Only) ------------------------------------------
+    function setupMindMap() {
+        const container = $("#mindmapContent");
+        if (!container) return;
+
+        const nodes = [
+            {
+                id: "root", label: "KEE Nexus RSS", sub: "View-Only Command Centre", color: "#0071E3", x: 460, y: 270, parent: null,
+                badge: "Core Platform",
+                desc: "View-only Road Surveillance System (RSS) and national road context portal for the Ministry of Works and Transport (MoWT), projecting from 2016 baseline to Vision 2040.",
+                bullets: ["Public view-only access", "Apple HIG Light Theme interface", "Downloadable CSV, Excel, KML, PNG, PDF outputs"]
+            },
+            {
+                id: "national", label: "National Baseline", sub: "21,284.02 km", color: "#16A34A", x: 180, y: 110, parent: "root",
+                badge: "FY 2026/27 Register",
+                desc: "Authoritative Uganda National Road Network extent (dated 23/09/2026) and major structures stock (dated 01/10/2026).",
+                bullets: ["Paved: 6,406.69 km (30.10%)", "Unpaved: 14,877.33 km (69.90%)", "552 Bridges (incl. B162 Atari Bridge) & 452 Major Culverts"]
+            },
+            {
+                id: "corridors", label: "RSS Corridors", sub: "M3, M20, A003N2", color: "#7C3AED", x: 180, y: 270, parent: "root",
+                badge: "Project Scope",
+                desc: "Three metropolitan corridors integrated into the Kajjansi Traffic Control Centre (TCC) over existing optical fibre.",
+                bullets: ["KEE Expressway (M3): 24.9 km", "Kampala Northern Bypass (M20): 20.0 km", "Entebbe Airport Dual (A003N2): 12.7 km"]
+            },
+            {
+                id: "field", label: "Field Surveillance", sub: "PTZ, WIM, VMS, RSU", color: "#0D9488", x: 180, y: 430, parent: "root",
+                badge: "Field Layer",
+                desc: "Intelligent roadside sensors, overhead gantry signage, and solar-hybrid communications cabinets.",
+                bullets: ["26 AI-ML PTZ / TMCS cameras", "5 WIM + ANPR enforcement sites", "10 Overhead VMS gantries & 13 fibre drops"]
+            },
+            {
+                id: "survey", label: "Survey Tools", sub: "MOBICAP & ROMDAS", color: "#D97706", x: 740, y: 110, parent: "root",
+                badge: "Condition & Traffic",
+                desc: "Standardised Ministry road condition and machine-based roughness testing tools supporting corridor monitoring.",
+                bullets: ["MOBICAP(Road condition assesment tool)", "ROMDAS(Roughness and rutting machine based testing)", "Classified traffic & crash-bin analytics"]
+            },
+            {
+                id: "tcc", label: "TCC & Procurement", sub: "Kajjansi & BOQ", color: "#DC2626", x: 740, y: 270, parent: "root",
+                badge: "Operations & Costing",
+                desc: "Automated event-driven incident verification, overload enforcement alerts, and costed Bill of Quantities.",
+                bullets: ["Central database & video wall", "Automated incident & overload decision trees", "Single-deployment CAPEX + 10% contingency + 18% VAT"]
+            },
+            {
+                id: "vision", label: "Vision 2040", sub: "2016 to 2040", color: "#0071E3", x: 740, y: 430, parent: "root",
+                badge: "Strategic Horizon",
+                desc: "Long-term traffic, freight, and asset readiness horizon aligned to Uganda Vision 2040.",
+                bullets: ["Esri World Imagery + Hybrid Labels basemap", "Metric units, decimal degrees, dd/mm/yyyy dates", "UK English technical standards"]
+            }
+        ];
+
+        let zoom = 1;
+        let selectedId = "root";
+
+        const renderInspector = (id) => {
+            const node = nodes.find((n) => n.id === id) || nodes[0];
+            const insp = $("#mindmapInspector");
+            if (!insp) return;
+            insp.innerHTML = `
+                <span class="mindmap-badge" style="background:${node.color}18;color:${node.color}">${escapeHtml(node.badge)}</span>
+                <h4>${escapeHtml(node.label)} <small style="color:#475569;font-weight:500">(${escapeHtml(node.sub)})</small></h4>
+                <p>${escapeHtml(node.desc)}</p>
+                <ul>${node.bullets.map((b) => `<li>${escapeHtml(b)}</li>`).join("")}</ul>
+            `;
+        };
+
+        const renderSvg = () => {
+            const svgWrap = $("#mindmapSvgWrap");
+            if (!svgWrap) return;
+            const edges = nodes.filter((n) => n.parent).map((n) => {
+                const p = nodes.find((x) => x.id === n.parent);
+                const mx = (p.x + n.x) / 2;
+                return `<path d="M ${p.x} ${p.y} C ${mx} ${p.y}, ${mx} ${n.y}, ${n.x} ${n.y}" fill="none" stroke="${n.color}" stroke-width="${selectedId === n.id ? 3.5 : 2}" stroke-opacity="${selectedId === n.id || selectedId === "root" ? 0.85 : 0.35}" />`;
+            }).join("");
+
+            const nodeEls = nodes.map((n) => {
+                const isSel = selectedId === n.id;
+                const w = n.id === "root" ? 190 : 172;
+                const h = 58;
+                return `
+                    <g class="mm-node" data-node="${n.id}" transform="translate(${n.x - w / 2}, ${n.y - h / 2})" style="cursor:pointer">
+                        <rect width="${w}" height="${h}" rx="12" fill="#FFFFFF" stroke="${isSel ? n.color : "#CBD5E1"}" stroke-width="${isSel ? 2.5 : 1.2}" />
+                        <rect width="6" height="${h}" rx="3" fill="${n.color}" />
+                        <text x="16" y="25" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A">${escapeHtml(n.label)}</text>
+                        <text x="16" y="43" font-family="Arial, sans-serif" font-size="11" fill="#475569">${escapeHtml(n.sub)}</text>
+                    </g>`;
+            }).join("");
+
+            svgWrap.innerHTML = `
+                <svg viewBox="0 0 920 540" aria-label="Interactive KEE RSS Mind Map">
+                    <g transform="translate(${460 * (1 - zoom)}, ${270 * (1 - zoom)}) scale(${zoom})">
+                        ${edges}
+                        ${nodeEls}
+                    </g>
+                </svg>`;
+
+            $$("#mindmapSvgWrap .mm-node").forEach((el) => {
+                el.addEventListener("click", () => {
+                    selectedId = el.dataset.node;
+                    renderSvg();
+                    renderInspector(selectedId);
+                });
+            });
+        };
+
+        container.innerHTML = `
+            <div class="mindmap-shell">
+                <div class="mindmap-canvas-panel">
+                    <div class="mindmap-toolbar">
+                        <div style="font-size:0.86rem;color:#334155;font-weight:600">Click any node to inspect details</div>
+                        <div style="display:flex;gap:8px">
+                            <button class="ghost-btn small" type="button" id="mmZoomInBtn"><i class="fa-solid fa-magnifying-glass-plus"></i><span>Zoom in</span></button>
+                            <button class="ghost-btn small" type="button" id="mmZoomOutBtn"><i class="fa-solid fa-magnifying-glass-minus"></i><span>Zoom out</span></button>
+                            <button class="ghost-btn small" type="button" id="mmResetBtn"><i class="fa-solid fa-rotate-left"></i><span>Reset</span></button>
+                        </div>
+                    </div>
+                    <div class="mindmap-svg-wrap" id="mindmapSvgWrap"></div>
+                </div>
+                <aside class="mindmap-inspector" id="mindmapInspector"></aside>
+            </div>
+        `;
+
+        renderSvg();
+        renderInspector(selectedId);
+
+        $("#mmZoomInBtn")?.addEventListener("click", () => { zoom = Math.min(1.5, zoom + 0.15); renderSvg(); });
+        $("#mmZoomOutBtn")?.addEventListener("click", () => { zoom = Math.max(0.7, zoom - 0.15); renderSvg(); });
+        $("#mmResetBtn")?.addEventListener("click", () => { zoom = 1; selectedId = "root"; renderSvg(); renderInspector("root"); });
     }
 
     document.addEventListener("DOMContentLoaded", init);
