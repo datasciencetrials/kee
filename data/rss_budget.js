@@ -68,7 +68,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 92302272,
                     "rate_usd": 692.96,
                     "amount_usd": 24946.56,
-                    "assumption": "Tecidel tendered PTZ rate USD 693 (TTRS workbook) at 3,700 UGX/USD"
+                    "assumption": "Tendered reference PTZ rate USD 693 (tendered reference schedule) at 3,700 UGX/USD"
                 },
                 {
                     "item": "Road Side Unit for TMCS, hybrid solar UPS, 6-hr backup, industrial fibre switch",
@@ -78,7 +78,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 352980000,
                     "rate_usd": 2650.0,
                     "amount_usd": 95400.0,
-                    "assumption": "Tecidel tendered rate (TTRS workbook), PTZ DS-2DE7A232IW at 3,700 UGX/USD"
+                    "assumption": "Tendered reference rate, PTZ DS-2DE7A232IW at 3,700 UGX/USD"
                 },
                 {
                     "item": "12 m galvanized iron (GI) pole with accessories",
@@ -88,7 +88,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 223869980,
                     "rate_usd": 6050.54,
                     "amount_usd": 60505.4,
-                    "assumption": "Tecidel tendered 12 m pole rate (TTRS workbook)"
+                    "assumption": "Tendered reference 12 m pole rate"
                 },
                 {
                     "item": "Camera mounting on existing structures (5 shared sites)",
@@ -98,7 +98,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 49500000,
                     "rate_usd": 1216.22,
                     "amount_usd": 13378.42,
-                    "assumption": "Tecidel tendered rate (TTRS workbook), PTZ DS-2DE7A232IW at 3,700 UGX/USD"
+                    "assumption": "Tendered reference rate, PTZ DS-2DE7A232IW at 3,700 UGX/USD"
                 },
                 {
                     "item": "Civil works: M25 foundation, chamber, backfilling, per site",
@@ -108,7 +108,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 113220000,
                     "rate_usd": 850.0,
                     "amount_usd": 30600.0,
-                    "assumption": "Tecidel tendered rate (TTRS workbook), PTZ DS-2DE7A232IW at 3,700 UGX/USD"
+                    "assumption": "Tendered reference rate, PTZ DS-2DE7A232IW at 3,700 UGX/USD"
                 },
                 {
                     "item": "AI/ML processing units + video-analytics licences (incident & accident detection, all TMCS)",
@@ -128,7 +128,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 160000000,
                     "rate_usd": 43243.24,
                     "amount_usd": 43243.24,
-                    "assumption": "Tecidel tendered rate (TTRS workbook), PTZ DS-2DE7A232IW at 3,700 UGX/USD"
+                    "assumption": "Tendered reference rate, PTZ DS-2DE7A232IW at 3,700 UGX/USD"
                 }
             ],
             "subtotal_ugx": 1441872252
@@ -144,7 +144,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 590150000,
                     "rate_usd": 14500.0,
                     "amount_usd": 159500.0,
-                    "assumption": "Engineer's estimate benchmarked to TTRS tendered rates"
+                    "assumption": "Engineer's estimate benchmarked to tendered reference rates"
                 },
                 {
                     "item": "Certified overhead VMS gantry spanning carriageway with walkway and 5.5 m clearance",
@@ -154,7 +154,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 508750000,
                     "rate_usd": 12500.0,
                     "amount_usd": 137500.0,
-                    "assumption": "Engineer's estimate benchmarked to TTRS tendered rates"
+                    "assumption": "Engineer's estimate benchmarked to tendered reference rates"
                 },
                 {
                     "item": "Road Side Unit for VMS, hybrid solar UPS backup",
@@ -164,7 +164,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 107855000,
                     "rate_usd": 2650.0,
                     "amount_usd": 29150.0,
-                    "assumption": "Engineer's estimate benchmarked to TTRS tendered rates"
+                    "assumption": "Engineer's estimate benchmarked to tendered reference rates"
                 },
                 {
                     "item": "Civil works, overhead VMS gantry foundations and protection",
@@ -174,7 +174,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 61050000,
                     "rate_usd": 1500.0,
                     "amount_usd": 16500.0,
-                    "assumption": "Engineer's estimate benchmarked to TTRS tendered rates"
+                    "assumption": "Engineer's estimate benchmarked to tendered reference rates"
                 },
                 {
                     "item": "Installation, testing & commissioning - VMS",
@@ -184,7 +184,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 80000000,
                     "rate_usd": 21621.62,
                     "amount_usd": 21621.62,
-                    "assumption": "Engineer's estimate benchmarked to TTRS tendered rates"
+                    "assumption": "Engineer's estimate benchmarked to tendered reference rates"
                 }
             ],
             "subtotal_ugx": 1347805000
@@ -210,7 +210,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 190000000,
                     "rate_usd": 25675.68,
                     "amount_usd": 51351.36,
-                    "assumption": "Mikros/Intercomp tendered WIM rates (TTRS workbook); enhancement scoped from OEM upgrade quotes"
+                    "assumption": "Tendered OEM WIM rates (tendered reference schedule); enhancement scoped from OEM upgrade quotes"
                 },
                 {
                     "item": "RSS integration of WIM sites: data interface to central database, event streaming, per site",
@@ -220,7 +220,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 160000000,
                     "rate_usd": 8648.65,
                     "amount_usd": 43243.25,
-                    "assumption": "Mikros/Intercomp tendered WIM rates (TTRS workbook); enhancement scoped from OEM upgrade quotes"
+                    "assumption": "Tendered OEM WIM rates (tendered reference schedule); enhancement scoped from OEM upgrade quotes"
                 },
                 {
                     "item": "NEW ANPR camera, WIM-integrated with weigh-event trigger sync, per site",
@@ -230,7 +230,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 290908800,
                     "rate_usd": 15724.8,
                     "amount_usd": 78624.0,
-                    "assumption": "Mikros WIM-ANPR tendered rate (TTRS workbook); ~1,533 heavy vehicles/day screened (measured)"
+                    "assumption": "Tendered WIM-ANPR rate (tendered reference schedule); ~1,533 heavy vehicles/day screened (measured)"
                 },
                 {
                     "item": "UNBS verification / recalibration support for WIM sites",
@@ -240,7 +240,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 65000000,
                     "rate_usd": 17567.57,
                     "amount_usd": 17567.57,
-                    "assumption": "Mikros/Intercomp tendered WIM rates (TTRS workbook); enhancement scoped from OEM upgrade quotes"
+                    "assumption": "Tendered OEM WIM rates (tendered reference schedule); enhancement scoped from OEM upgrade quotes"
                 },
                 {
                     "item": "Installation, testing & commissioning - WIM",
@@ -250,7 +250,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 115000000,
                     "rate_usd": 31081.08,
                     "amount_usd": 31081.08,
-                    "assumption": "Mikros/Intercomp tendered WIM rates (TTRS workbook); enhancement scoped from OEM upgrade quotes"
+                    "assumption": "Tendered OEM WIM rates (tendered reference schedule); enhancement scoped from OEM upgrade quotes"
                 }
             ],
             "subtotal_ugx": 1024908800
@@ -302,7 +302,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 270178070,
                     "rate_usd": 36510.55,
                     "amount_usd": 73021.1,
-                    "assumption": "COTS list prices (Dell/Planet/APC references in TTRS workbook) + integration norm"
+                    "assumption": "COTS list prices (Dell/Planet/APC references in tendered reference schedule) + integration norm"
                 },
                 {
                     "item": "Database licensed edition",
@@ -312,7 +312,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 55500000,
                     "rate_usd": 7500.0,
                     "amount_usd": 15000.0,
-                    "assumption": "COTS list prices (Dell/Planet/APC references in TTRS workbook) + integration norm"
+                    "assumption": "COTS list prices (Dell/Planet/APC references in tendered reference schedule) + integration norm"
                 },
                 {
                     "item": "Video wall with controller and accessories",
@@ -322,7 +322,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 165000000,
                     "rate_usd": 44594.59,
                     "amount_usd": 44594.59,
-                    "assumption": "COTS list prices (Dell/Planet/APC references in TTRS workbook) + integration norm"
+                    "assumption": "COTS list prices (Dell/Planet/APC references in tendered reference schedule) + integration norm"
                 },
                 {
                     "item": "Video recording & incident backup server, 180-day storage",
@@ -332,7 +332,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 103600000,
                     "rate_usd": 28000.0,
                     "amount_usd": 28000.0,
-                    "assumption": "COTS list prices (Dell/Planet/APC references in TTRS workbook) + integration norm"
+                    "assumption": "COTS list prices (Dell/Planet/APC references in tendered reference schedule) + integration norm"
                 },
                 {
                     "item": "Video Analytics & Management Software (VAMS)",
@@ -342,7 +342,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 55500000,
                     "rate_usd": 15000.0,
                     "amount_usd": 15000.0,
-                    "assumption": "COTS list prices (Dell/Planet/APC references in TTRS workbook) + integration norm"
+                    "assumption": "COTS list prices (Dell/Planet/APC references in tendered reference schedule) + integration norm"
                 },
                 {
                     "item": "Network Management System (NMS), COTS",
@@ -352,7 +352,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 81400000,
                     "rate_usd": 22000.0,
                     "amount_usd": 22000.0,
-                    "assumption": "COTS list prices (Dell/Planet/APC references in TTRS workbook) + integration norm"
+                    "assumption": "COTS list prices (Dell/Planet/APC references in tendered reference schedule) + integration norm"
                 },
                 {
                     "item": "Operator workstation, multi-screen",
@@ -362,7 +362,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 34629558,
                     "rate_usd": 3119.78,
                     "amount_usd": 9359.34,
-                    "assumption": "COTS list prices (Dell/Planet/APC references in TTRS workbook) + integration norm"
+                    "assumption": "COTS list prices (Dell/Planet/APC references in tendered reference schedule) + integration norm"
                 },
                 {
                     "item": "Fibre optic network switch, 24 SFP",
@@ -372,7 +372,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 62900000,
                     "rate_usd": 8500.0,
                     "amount_usd": 17000.0,
-                    "assumption": "COTS list prices (Dell/Planet/APC references in TTRS workbook) + integration norm"
+                    "assumption": "COTS list prices (Dell/Planet/APC references in tendered reference schedule) + integration norm"
                 },
                 {
                     "item": "Layer-3 manageable switch, 24 GbE",
@@ -382,7 +382,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 15540000,
                     "rate_usd": 4200.0,
                     "amount_usd": 4200.0,
-                    "assumption": "COTS list prices (Dell/Planet/APC references in TTRS workbook) + integration norm"
+                    "assumption": "COTS list prices (Dell/Planet/APC references in tendered reference schedule) + integration norm"
                 },
                 {
                     "item": "UPS 10 kVA hot-standby, lithium-ion",
@@ -392,7 +392,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 30340000,
                     "rate_usd": 8200.0,
                     "amount_usd": 8200.0,
-                    "assumption": "COTS list prices (Dell/Planet/APC references in TTRS workbook) + integration norm"
+                    "assumption": "COTS list prices (Dell/Planet/APC references in tendered reference schedule) + integration norm"
                 },
                 {
                     "item": "Firewall with IDS/IPS licences",
@@ -402,7 +402,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 31450000,
                     "rate_usd": 8500.0,
                     "amount_usd": 8500.0,
-                    "assumption": "COTS list prices (Dell/Planet/APC references in TTRS workbook) + integration norm"
+                    "assumption": "COTS list prices (Dell/Planet/APC references in tendered reference schedule) + integration norm"
                 },
                 {
                     "item": "Server racks (42U x2) and structured cabling",
@@ -412,7 +412,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 110260000,
                     "rate_usd": 29800.0,
                     "amount_usd": 29800.0,
-                    "assumption": "COTS list prices (Dell/Planet/APC references in TTRS workbook) + integration norm"
+                    "assumption": "COTS list prices (Dell/Planet/APC references in tendered reference schedule) + integration norm"
                 },
                 {
                     "item": "Installation, testing & commissioning - TCC",
@@ -422,7 +422,7 @@ window.RSS_BUDGET = {
                     "amount_ugx": 100000000,
                     "rate_usd": 27027.03,
                     "amount_usd": 27027.03,
-                    "assumption": "COTS list prices (Dell/Planet/APC references in TTRS workbook) + integration norm"
+                    "assumption": "COTS list prices (Dell/Planet/APC references in tendered reference schedule) + integration norm"
                 }
             ],
             "subtotal_ugx": 1116297628

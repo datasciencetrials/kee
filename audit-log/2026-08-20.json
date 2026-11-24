@@ -18,7 +18,7 @@
     "amber": "pass",
     "darkBackground": "fail",
     "nav": "pass",
-    "mowtBranding": "pass"
+    "institutionalBranding": "pass"
   },
   "accuracy": {
     "extractedFigures": [],

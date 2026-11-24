@@ -1967,13 +1967,13 @@ const ITS_GEOSPATIAL_DATA = {
       "id": "Existing Police Camera",
       "short": "POL",
       "label": "Existing Police Camera",
-      "color": "#ff006e"
+      "color": "#0284C7"
     },
     {
       "id": "TOC",
       "label": "Traffic Operations Centre",
       "short": "TOC",
-      "color": "#111827"
+      "color": "#0071E3"
     },
     {
       "id": "ANPR",
@@ -2009,7 +2009,7 @@ const ITS_GEOSPATIAL_DATA = {
       "id": "ECB",
       "short": "ECB",
       "label": "Emergency Call Box",
-      "color": "#ffee00"
+      "color": "#D97706"
     }
   ],
   "installations": [
