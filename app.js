@@ -3321,7 +3321,7 @@
         };
 
         const bud = rssBudget || {};
-        header("ROAD SURVEILLANCE SYSTEM (RSS) - PROPOSAL", "KNBP + KEE + Entebbe Airport Dual | Ministry of Works & Transport | " + state.assets.length + " components | chainage measured from the beginning of each road");
+        header("ROAD SURVEILLANCE SYSTEM (RSS) - PROPOSAL", "KNBP + KEE + Entebbe Airport Dual | National Road Network Authority | " + state.assets.length + " components | chainage measured from the beginning of each road");
 
         // Budget summary
         table("Budget summary (UGX)", ["Line", "Amount (UGX)", "Amount (USD)"], [
@@ -3396,7 +3396,7 @@
                         <div class="doc-icon"><i class="fa-solid fa-road"></i></div>
                         <h4>National Road Network &amp; Structures Baseline</h4>
                     </div>
-                    <p>This platform operates within the Ministry of Works and Transport (MoWT), Department of National Roads authoritative baseline of <strong>21,284.02 km</strong> (dated 23/09/2026), comprising <strong>6,406.69 km</strong> paved and <strong>14,877.33 km</strong> unpaved roads.</p>
+                    <p>This platform operates within the NATIONAL TRANSPORT GIS ENTERPRISE (National Road Network), NATIONAL ROAD NETWORK ADMINISTRATION authoritative baseline of <strong>21,284.02 km</strong> (dated 23/09/2026), comprising <strong>6,406.69 km</strong> paved and <strong>14,877.33 km</strong> unpaved roads.</p>
                     <ul>
                         <li>International Trunk Roads: <strong>2,604.65 km</strong></li>
                         <li>National Trunk Roads: <strong>2,845.27 km</strong></li>
@@ -3425,7 +3425,7 @@
                         <div class="doc-icon"><i class="fa-solid fa-gauge-high"></i></div>
                         <h4>Survey &amp; Condition Assessment Standards</h4>
                     </div>
-                    <p>Network condition, roughness, and structural performance indicators follow standardised Ministry survey protocols:</p>
+                    <p>Network condition, roughness, and structural performance indicators follow standardised Road Network Authority survey protocols:</p>
                     <ul>
                         <li><strong>MOBICAP(Road condition assesment tool):</strong> Mobile road condition capture for paved and unpaved surface distress evaluation</li>
                         <li><strong>ROMDAS(Roughness and rutting machine based testing):</strong> Machine-based International Roughness Index (IRI) and rutting measurement</li>
@@ -3459,7 +3459,7 @@
             {
                 id: "root", label: "KEE Nexus RSS", sub: "View-Only Command Centre", color: "#0071E3", x: 460, y: 270, parent: null,
                 badge: "Core Platform",
-                desc: "View-only Road Surveillance System (RSS) and national road context portal for the Ministry of Works and Transport (MoWT), projecting from 2016 baseline to Vision 2040.",
+                desc: "View-only Road Surveillance System (RSS) and national road context portal for the NATIONAL TRANSPORT GIS ENTERPRISE (National Road Network), projecting from 2016 baseline to Vision 2040.",
                 bullets: ["Public view-only access", "Apple HIG Light Theme interface", "Downloadable CSV, Excel, KML, PNG, PDF outputs"]
             },
             {
@@ -3483,7 +3483,7 @@
             {
                 id: "survey", label: "Survey Tools", sub: "MOBICAP & ROMDAS", color: "#D97706", x: 740, y: 110, parent: "root",
                 badge: "Condition & Traffic",
-                desc: "Standardised Ministry road condition and machine-based roughness testing tools supporting corridor monitoring.",
+                desc: "Standardised Road Network Authority road condition and machine-based roughness testing tools supporting corridor monitoring.",
                 bullets: ["MOBICAP(Road condition assesment tool)", "ROMDAS(Roughness and rutting machine based testing)", "Classified traffic & crash-bin analytics"]
             },
             {
