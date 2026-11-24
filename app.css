@@ -147,7 +147,7 @@ a {
     border-bottom: 3px solid transparent;
     border-radius: 0;
     background: transparent;
-    color: #94a3b8;
+    color: #475569;
     font-weight: 600;
     font-size: 0.95rem;
     cursor: pointer;
@@ -270,7 +270,7 @@ a {
 
 .agency-text {
     font-size: 0.75rem;
-    color: #94a3b8;
+    color: #475569;
 }
 
 .live-clock {
@@ -932,7 +932,7 @@ tbody tr.active-row {
     border-radius: 99px;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid transparent;
-    color: #94a3b8;
+    color: #475569;
     font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
@@ -976,7 +976,7 @@ tbody tr.active-row {
     top: 0;
     z-index: 10;
     font-size: 0.8rem;
-    color: #94a3b8;
+    color: #475569;
 }
 
 .boq-table td {
@@ -1724,7 +1724,7 @@ tbody tr.active-row {
 
 .media-card-desc {
     font-size: 0.85rem;
-    color: #94a3b8;
+    color: #475569;
     line-height: 1.5;
     flex: 1;
     margin-bottom: 16px;
@@ -3278,7 +3278,7 @@ body.map-fullscreen-active .map-stage .map-control-overlay,
         border-radius: 99px;
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid transparent;
-        color: #94a3b8;
+        color: #475569;
         font-size: 0.85rem;
         font-weight: 600;
         cursor: pointer;
