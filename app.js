@@ -2542,7 +2542,7 @@
         let speedChartHtml = "";
         if (spKm.length) {
             speedChartHtml = clusteredChart(
-                "KEE measured speed profile by kilometre section (ROMDAS October 2025, km/h)",
+                "KEE measured speed profile by kilometre section (ROMDAS(Roughness and rutting machine based testing) October 2025, km/h)",
                 spKm.map((r) => ({
                     label: r.label,
                     values: [r.m3Lhs || 0, r.m3Rhs || 0, r.m3n1Lhs || 0, r.m3n1Rhs || 0]
@@ -3573,7 +3573,7 @@
                         <li><strong>KEE Expressway Corridor:</strong> 51.4 km total network (36.9 km main alignment + 14.5 km Munyonyo spur)</li>
                         <li><strong>Toll Plazas (3 plazas):</strong> Busega Main Toll Plaza (km 2.40), Kajjansi Toll Plaza &amp; TCC (km 12.07), and Mpala Toll Plaza (km 24.65)</li>
                         <li><strong>Traffic Volumes:</strong> Measured tolling ADT reaching 26,154 vehicles/day (April 2026) and 29,831 peak ADT (December 2025)</li>
-                        <li><strong>Speed Profiles:</strong> ROMDAS October 2025 mainline mean speeds of 71.7 to 78.6 km/h (with toll-plaza approach deceleration to 42.2 to 53.9 km/h) and Munyonyo spur 58.7 to 64.3 km/h</li>
+                        <li><strong>Speed Profiles:</strong> ROMDAS(Roughness and rutting machine based testing) October 2025 mainline mean speeds of 71.7 to 78.6 km/h (with toll-plaza approach deceleration to 42.2 to 53.9 km/h) and Munyonyo spur 58.7 to 64.3 km/h</li>
                         <li><strong>Kampala Northern Bypass (M20):</strong> 20.0 km dualised urban arterial bypass corridor</li>
                         <li><strong>Entebbe Airport Dual (A003N2):</strong> 12.7 km dual carriageway access corridor (41,352 ADT, 2025)</li>
                     </ul>
@@ -3648,7 +3648,7 @@
                 ]
             },
             {
-                id: "survey", label: "Survey Tools", sub: "MOBICAP & ROMDAS", color: "#D97706", x: 740, y: 110, parent: "root",
+                id: "survey", label: "Survey Tools", sub: "MOBICAP(Road condition assesment tool) & ROMDAS(Roughness and rutting machine based testing)", color: "#D97706", x: 740, y: 110, parent: "root",
                 badge: "Condition & Traffic",
                 desc: "Standardised Road Network Authority road condition and machine-based roughness testing tools supporting corridor monitoring.",
                 bullets: ["MOBICAP(Road condition assesment tool)", "ROMDAS(Roughness and rutting machine based testing)", "Classified traffic & crash-bin analytics"]
